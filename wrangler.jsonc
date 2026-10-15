@@ -1,0 +1,11 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "vinitchuri",
+  "account_id": "dba7a9b5ed108516b714250de2a0dd0f",
+  "compatibility_date": "2026-10-01",
+  // `pnpm build` writes the static site to ./out (next.config.ts: output: "export").
+  "assets": {
+    "directory": "./out",
+    "not_found_handling": "404-page"
+  }
+}
