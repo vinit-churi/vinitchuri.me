@@ -1,4 +1,4 @@
-# vinitchuri.dev
+# vinitchuri.me
 
 The personal site of Vinit Churi, an engineer in Mumbai: products (TraceSarkar, Hookline, ReelForge),
 the agents in the lab (starting with Fillmore, a form-filling agent), long-form writing and a now page.
@@ -34,7 +34,7 @@ pnpm deploy     # next build → npx wrangler deploy (serves ./out)
 
 ## Domain
 
-The canonical origin is `https://vinitchuri.dev` (override with `NEXT_PUBLIC_SITE_URL`). Once the domain is on
-Cloudflare, add it as a Custom Domain on the `vinitchuri` Worker.
+The canonical origin is `https://vinitchuri.me` (override with `NEXT_PUBLIC_SITE_URL`). It is attached to the
+`vinitchuri` Worker as a Custom Domain in `wrangler.jsonc`, so `wrangler deploy` keeps it wired up.
 
 See `docs/design-system.md` for tokens, type and interaction conventions.

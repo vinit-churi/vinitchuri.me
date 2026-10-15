@@ -83,7 +83,7 @@ export async function renderCard({ kicker, title, subtitle, footer, color, onCol
             )}
           </div>
 
-          <div style={{ display: "flex", fontSize: 24, fontWeight: 500, color: "#5b5953" }}>{footer ?? "vinitchuri.dev"}</div>
+          <div style={{ display: "flex", fontSize: 24, fontWeight: 500, color: "#5b5953" }}>{footer ?? "vinitchuri.me"}</div>
         </div>
 
         {color && (

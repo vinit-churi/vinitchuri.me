@@ -10,6 +10,6 @@ export default function Image() {
     kicker: "TraceSarkar · Hookline · ReelForge · Fillmore",
     title: "Hi, I’m Vinit.",
     subtitle: "I find real problems and build products and agents that fix them.",
-    footer: "An engineer in Mumbai · vinitchuri.dev",
+    footer: "An engineer in Mumbai · vinitchuri.me",
   });
 }

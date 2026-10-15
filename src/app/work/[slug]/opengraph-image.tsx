@@ -17,7 +17,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
     kicker: `${product.kicker} · ${product.status}`,
     title: product.name,
     subtitle: product.oneLiner,
-    footer: `${product.credit} · vinitchuri.dev`,
+    footer: `${product.credit} · vinitchuri.me`,
     color: product.color,
     onColor: product.onColor,
   });
