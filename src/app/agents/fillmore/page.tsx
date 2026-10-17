@@ -7,6 +7,7 @@ import {
   PlayFilmButton,
   WaitlistForm,
 } from "@/components/fillmore/fillmore-client";
+import { POSES } from "@/components/fillmore/engine";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema } from "@/lib/schema";
 import styles from "./fillmore.module.css";
@@ -107,7 +108,8 @@ export default function FillmorePage() {
             </svg>
             Play
           </span>
-          <Image src={FILLMORE_IMAGE} alt="" width={720} height={658} unoptimized />
+          {/* The nervous one: the film is told by him. */}
+          <Image src={POSES.panic.src} alt="" width={693} height={600} unoptimized />
         </PlayFilmButton>
       </section>
 

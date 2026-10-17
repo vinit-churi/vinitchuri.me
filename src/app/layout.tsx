@@ -77,6 +77,9 @@ export default function RootLayout({
   return (
     <html
       lang="en-IN"
+      // Smooth scrolling is for in-page links only; Next turns it off while it jumps to the top of a
+      // new page, otherwise the jump animates and the page lands under the sticky header.
+      data-scroll-behavior="smooth"
       className={`${hanken.variable} ${instrument.variable} ${jetbrains.variable}`}
     >
       <body className="min-h-screen overflow-x-hidden bg-paper font-sans text-ink antialiased">

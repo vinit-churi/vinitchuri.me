@@ -4,15 +4,22 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import styles from "@/app/agents/fillmore/fillmore.module.css";
 import { site } from "@/content/site";
-import { FILM_LENGTH, FILM_SUBTITLES, createFilm, startSky } from "./engine";
+import { FILM_LENGTH, FILM_SUBTITLES, POSES, createFilm, startSky, type Art, type Cast, type Pose } from "./engine";
 
-export const FILLMORE_IMAGE = "/agents/fillmore.png";
+export const FILLMORE_IMAGE = POSES.hero.src;
 const PLAY_EVENT = "fillmore:play";
 
-function loadPenguin() {
+function loadArt(pose: Pose): Art {
+  const { src, ...fit } = POSES[pose];
   const img = new Image();
-  img.src = FILLMORE_IMAGE;
-  return img;
+  img.src = src;
+  // Decode ahead of time so a pose never pops in half-drawn mid-scene.
+  img.decode().catch(() => {});
+  return { img, ...fit };
+}
+
+function loadCast(): Cast {
+  return Object.fromEntries((Object.keys(POSES) as Pose[]).map((p) => [p, loadArt(p)])) as Cast;
 }
 
 /** Any button can start the film; it plays from wherever it was clicked. */
@@ -72,7 +79,7 @@ export function FillmoreHero() {
 
   useEffect(() => {
     if (!heroRef.current || !skyRef.current || !artRef.current) return;
-    return startSky(skyRef.current, heroRef.current, artRef.current, loadPenguin());
+    return startSky(skyRef.current, heroRef.current, artRef.current, loadArt("hero"));
   }, []);
 
   return (
@@ -122,7 +129,7 @@ export function FillmoreFilm() {
 
   useEffect(() => {
     if (!canvasRef.current) return;
-    const film = createFilm(canvasRef.current, loadPenguin(), {
+    const film = createFilm(canvasRef.current, loadCast(), {
       onStart: () => {
         setLive(true);
         document.body.dataset.film = "on";

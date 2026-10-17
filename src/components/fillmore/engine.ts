@@ -45,25 +45,48 @@ function fontFamilies() {
   };
 }
 
-/* ---------- Fillmore and his paper plane ---------- */
+/* ---------- Fillmore, his poses and his paper plane ---------- */
+
+/**
+ * One drawing of Fillmore. `cx` is where his body's centre sits across the artwork and `foot`
+ * how far down his feet are, both as fractions; `k` scales poses whose artwork carries extra
+ * props (flying papers, "!" marks) so his body stays the same size from pose to pose.
+ */
+export type Art = { img: HTMLImageElement; cx: number; foot: number; k: number };
+
+export const POSES = {
+  hero: { src: "/agents/fillmore.png", cx: 0.57, foot: 0.97, k: 1 },
+  checklist: { src: "/agents/fillmore/poses/checklist.webp", cx: 0.46, foot: 1, k: 1 },
+  sweat: { src: "/agents/fillmore/poses/sweat.webp", cx: 0.53, foot: 1, k: 1.08 },
+  panic: { src: "/agents/fillmore/poses/panic.webp", cx: 0.51, foot: 1, k: 1.2 },
+  inspect: { src: "/agents/fillmore/poses/inspect.webp", cx: 0.42, foot: 1, k: 1 },
+  stack: { src: "/agents/fillmore/poses/stack.webp", cx: 0.49, foot: 1, k: 1 },
+  laptop: { src: "/agents/fillmore/poses/laptop.webp", cx: 0.48, foot: 1, k: 1 },
+  worried: { src: "/agents/fillmore/poses/worried.webp", cx: 0.53, foot: 1, k: 1.08 },
+  tablet: { src: "/agents/fillmore/poses/tablet.webp", cx: 0.49, foot: 1, k: 1 },
+} as const;
+export type Pose = keyof typeof POSES;
+export type Cast = Record<Pose, Art>;
 
 function drawPenguin(
   ctx: Ctx,
-  img: HTMLImageElement,
+  art: Art,
   x: number,
   y: number,
   h: number,
-  o: { flip?: boolean; rot?: number; sq?: number } = {},
+  o: { flip?: boolean; rot?: number; sq?: number; alpha?: number } = {},
 ) {
-  if (!img.complete || !img.naturalWidth) return;
+  const { img } = art;
+  if (!img.complete || !img.naturalWidth || o.alpha === 0) return;
+  h *= art.k;
   const w = (h * img.naturalWidth) / img.naturalHeight;
   ctx.save();
+  if (o.alpha !== undefined) ctx.globalAlpha *= o.alpha;
   ctx.translate(x, y);
   if (o.rot) ctx.rotate(o.rot);
   ctx.scale(o.flip ? -1 : 1, 1);
   if (o.sq) ctx.scale(1 + o.sq, 1 - o.sq);
-  // Anchor: feet at the bottom, body centre about 57% across the artwork.
-  ctx.drawImage(img, -w * 0.57, -h * 0.97, w, h);
+  ctx.drawImage(img, -w * art.cx, -h * art.foot, w, h);
   ctx.restore();
 }
 
@@ -163,7 +186,8 @@ function cloudSprite(seed: number) {
 type Cloud = { x: number; y: number; z: number; s: number; k: number; flip: boolean };
 
 /** Starts the sky behind `hero`. Fillmore's plane is centred on `art`. Returns a cleanup. */
-export function startSky(canvas: HTMLCanvasElement, hero: HTMLElement, art: HTMLElement, img: HTMLImageElement) {
+export function startSky(canvas: HTMLCanvasElement, hero: HTMLElement, art: HTMLElement, fillmore: Art) {
+  const img = fillmore.img;
   const ctx = canvas.getContext("2d")!;
   const reduce = prefersReducedMotion();
   const sprites = Array.from({ length: 8 }, (_, i) => cloudSprite(11 + i * 97));
@@ -258,7 +282,7 @@ export function startSky(canvas: HTMLCanvasElement, hero: HTMLElement, art: HTML
       }
       ctx.globalAlpha = 1;
       drawPlane(ctx, P.s);
-      drawPenguin(ctx, img, -22 * P.s, 4 * P.s, 240 * P.s, { rot: Math.sin(t * 1.1) * 0.03 });
+      drawPenguin(ctx, fillmore, -22 * P.s, 4 * P.s, 240 * P.s, { rot: Math.sin(t * 1.1) * 0.03 });
       ctx.restore();
       planeDrawn = true;
     };
@@ -390,8 +414,13 @@ export const FILM_SUBTITLES: [number, number, string][] = [
   [38.5, 44.5, "Fillmore. A form-filling agent by Vinit Churi, in the lab."],
 ];
 
-function makeStage(img: HTMLImageElement) {
+/** A pose that starts at a scene-local time. */
+type Beat = [number, Pose];
+const HOP = 0.5;
+
+function makeStage(cast: Cast) {
   const F = fontFamilies();
+  const still = prefersReducedMotion();
   const rr = (ctx: Ctx, x: number, y: number, w: number, h: number, r: number) => {
     ctx.beginPath();
     ctx.roundRect(x, y, w, h, r);
@@ -419,7 +448,33 @@ function makeStage(img: HTMLImageElement) {
     ctx.ellipse(x, y, w, w * 0.14, 0, 0, 7);
     ctx.fill();
   };
-  const penguin = (ctx: Ctx, x: number, y: number, h: number, o?: { flip?: boolean; rot?: number; sq?: number }) => drawPenguin(ctx, img, x, y, h, o);
+  const penguin = (ctx: Ctx, x: number, y: number, h: number, o?: { flip?: boolean; rot?: number; sq?: number }) => drawPenguin(ctx, cast.hero, x, y, h, o);
+
+  /**
+   * Fillmore acting through a scene: he breathes while he holds a pose, and changes pose with a
+   * little hop (crouch, jump, land) while the old drawing dissolves into the new one mid-air.
+   */
+  function act(ctx: Ctx, beats: Beat[], lt: number, x: number, y: number, h: number, o: { flip?: boolean; rot?: number; sq?: number } = {}) {
+    let i = 0;
+    while (i + 1 < beats.length && lt >= beats[i + 1][0]) i++;
+    const since = lt - beats[i][0];
+    // With reduced motion he stands still and the poses simply dissolve into each other.
+    const breathe = still ? 0 : Math.sin(lt * 2.4);
+    let sq = (o.sq ?? 0) + breathe * 0.012;
+    let lift = breathe * h * 0.004;
+    let mix = 1;
+    if (i > 0 && since < HOP) {
+      const p = since / HOP;
+      if (!still) {
+        sq += Math.sin(p * Math.PI * 3) * 0.08 * (1 - p * 0.5);
+        lift += p > 0.25 && p < 0.75 ? Math.sin(((p - 0.25) / 0.5) * Math.PI) * h * 0.07 : 0;
+      }
+      mix = eio(seg(p, 0.2, 0.6));
+    }
+    const pose = { flip: o.flip, rot: (o.rot ?? 0) + (still ? 0 : Math.sin(lt * 1.3) * 0.012), sq };
+    if (mix < 1) drawPenguin(ctx, cast[beats[i - 1][1]], x, y - lift, h, { ...pose, alpha: 1 - mix });
+    drawPenguin(ctx, cast[beats[i][1]], x, y - lift, h, { ...pose, alpha: mix });
+  }
 
   function doc(ctx: Ctx, kind: string, x: number, y: number, rot: number) {
     ctx.save();
@@ -630,7 +685,7 @@ function makeStage(img: HTMLImageElement) {
       text(ctx, `Field ${cnt} of 47`, 1345, fy - 1, 21, { a: "center", c: PAPER, w: 500, f: F.mono });
       const shake = lt > 3 ? Math.sin(lt * 38) * 3 * seg(lt, 3, 4) : 0;
       shadow(ctx, 430, 735, 140);
-      penguin(ctx, 430 + shake, 736, 400, { sq: lt > 3 ? 0.03 * seg(lt, 3, 3.6) : 0 });
+      act(ctx, [[0, "checklist"], [2.9, "sweat"], [5.1, "panic"]], lt, 430 + shake, 736, 360, { sq: lt > 3 ? 0.03 * seg(lt, 3, 3.6) : 0 });
       if (lt > 3.4) {
         for (let i = 0; i < 3; i++) {
           const p = ((lt - 3.4) * 0.9 + i * 0.33) % 1;
@@ -704,7 +759,7 @@ function makeStage(img: HTMLImageElement) {
         text(ctx, c, x + 14, y + 26, 17, { w: 500, f: F.mono, c: q >= 1 ? GREEN : BLUE });
       });
       shadow(ctx, 1350, 845, 90);
-      penguin(ctx, 1350, 846, 220, { rot: Math.sin(lt * 5) * 0.03, flip: true });
+      act(ctx, [[0, "stack"], [2.6, "inspect"], [5.6, "checklist"]], lt, 1350, 846, 230, { flip: true });
       ctx.restore();
     }
 
@@ -791,7 +846,8 @@ function makeStage(img: HTMLImageElement) {
       if (allDone && !clicked) text(ctx, "Fillmore never clicks this.", sbx + 268, sby + 40, 19, { c: "#5b5953", w: 500, f: F.mono });
       const px = 1370 + (1 - eo(seg(lt, 0.5, 1.3))) * 300;
       shadow(ctx, px, 800, 110);
-      penguin(ctx, px, 802, 330, { flip: true, rot: lt > askT && lt < answerT ? Math.sin(lt * 3) * 0.04 : 0 });
+      const beats: Beat[] = [[0, "laptop"], [askT, "worried"], [answerT, "laptop"], [answerT + 1.6, "checklist"], [15.3, "tablet"]];
+      act(ctx, beats, lt, px, 802, 330, { flip: true, rot: lt > askT && lt < answerT ? Math.sin(lt * 3) * 0.04 : 0 });
       bubble(ctx, px - 30, 400, 330, ["Two addresses found.", "Which one is home?"], lt > askT + 0.2 && lt < answerT ? seg(lt, askT + 0.2, askT + 0.6) : 0);
       if (lt > askT + 1.4 && lt < answerT + 0.5) {
         const oy = by + 240 + 2 * 130 + 70;
@@ -845,13 +901,13 @@ type FilmCallbacks = {
 };
 
 /** Sets up the ink film on a full-screen canvas. Call `play` from a click; `close` to skip. */
-export function createFilm(canvas: HTMLCanvasElement, img: HTMLImageElement, cb: FilmCallbacks) {
+export function createFilm(canvas: HTMLCanvasElement, cast: Cast, cb: FilmCallbacks) {
   const fctx = canvas.getContext("2d")!;
   const scene = document.createElement("canvas");
   const sctx = scene.getContext("2d")!;
   const ink = document.createElement("canvas");
   const ictx = ink.getContext("2d")!;
-  const drawStage = makeStage(img);
+  const drawStage = makeStage(cast);
   const INTRO = 1.25;
   const OUTRO = 1.3;
   let W = 0, H = 0, DPR = 1;
