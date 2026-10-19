@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Examplia Travel Insurance quote (demo form)</title>
+<link rel="stylesheet" href="demo.css" />
+<style>
+  body { --accent: #8a3b12; }
+  .banner { background: var(--accent); color: #fff; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px 18px; }
+</style>
+</head>
+<body>
+<div class="demo-flag">DEMO FORM for testing Fillmore's penguin. Fictional insurer; nothing is sent anywhere.</div>
+<header class="banner"><div class="wrap"><b>Examplia Assure</b> · Travel insurance · Get a quote</div></header>
+
+<main class="wrap">
+  <h1>Get a travel insurance quote</h1>
+  <p class="lede">Takes two minutes. We'll show your quote on the next page.</p>
+
+  <form id="quote" action="insurance-thanks.html" novalidate>
+    <h2>About you</h2>
+    <div class="grid">
+      <label>Full name (as on passport) * <input name="insured_name" required /></label>
+      <label>Date of birth * <input name="insured_dob" placeholder="DD/MM/YYYY" /></label>
+      <label>Email address * <input name="insured_email" type="email" /></label>
+      <label>Mobile number * <input name="insured_mobile" maxlength="10" /><small>10 digits, without +91</small></label>
+      <label>Nationality *
+        <select name="insured_nationality">
+          <option value="">Select</option><option value="IN">Indian</option><option value="GB">British</option><option value="US">American</option><option value="AE">Emirati</option>
+        </select>
+      </label>
+      <label>Passport number * <input name="insured_passport" /></label>
+    </div>
+
+    <h2>Address for policy documents</h2>
+    <div class="grid">
+      <label>Address line 1 * <input name="pol_addr1" /></label>
+      <label>City * <input name="pol_city" /></label>
+      <label>PIN code * <input name="pol_pin" maxlength="6" /></label>
+    </div>
+
+    <h2>Cover</h2>
+    <div class="grid">
+      <label>Nominee name * <input name="nominee_name" /></label>
+      <label>Relationship with nominee
+        <select name="nominee_rel"><option value="">Select</option><option>Spouse</option><option>Parent</option><option>Child</option><option>Sibling</option></select>
+      </label>
+      <label>Sum insured
+        <select name="sum_insured"><option value="">Select</option><option>USD 50,000</option><option>USD 100,000</option><option>USD 250,000</option></select>
+      </label>
+      <fieldset class="inline">
+        <legend>Any pre-existing disease (PED)? *</legend>
+        <label><input type="radio" name="ped" value="Y" /> Yes</label>
+        <label><input type="radio" name="ped" value="N" /> No</label>
+      </fieldset>
+      <label>GSTIN (optional) <input name="gstin" /></label>
+      <label>Channel partner code <input name="cp_code" /></label>
+    </div>
+
+    <label class="decl"><input type="checkbox" name="declare" /> I confirm the details above are correct. *</label>
+    <div class="actions"><button type="submit">Get quote</button></div>
+  </form>
+</main>
+<script>
+  window.__submitted = false;
+  document.getElementById("quote").addEventListener("submit", (e) => {
+    e.preventDefault();
+    window.__submitted = true;
+    location.href = "insurance-thanks.html";
+  });
+</script>
+</body>
+</html>

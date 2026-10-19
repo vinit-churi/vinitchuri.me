@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fillmore demo forms</title>
+<link rel="stylesheet" href="demo.css" />
+<style>
+  ol li { margin-bottom: 8px; }
+  .forms { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin: 18px 0 40px; }
+  .forms a { display: block; background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 16px 18px; color: inherit; text-decoration: none; }
+  .forms a:hover { border-color: #3b2fd9; }
+  .forms b { display: block; font-size: 16px; margin-bottom: 4px; color: #3b2fd9; }
+  code { background: #eee; padding: 1px 5px; border-radius: 4px; }
+</style>
+</head>
+<body>
+<div class="demo-flag">Test forms for the Fillmore prototype. Fictional data only.</div>
+<main class="wrap">
+  <h1>Fillmore demo forms</h1>
+  <ol>
+    <li>Install Fillmore from the Chrome Web Store, or load <code>fillmore/extension/dist</code> unpacked.</li>
+    <li>Click the Fillmore icon in the toolbar (or press <code>Alt+Shift+F</code>) to open the side panel.</li>
+    <li>On the Documents tab, press <b>Load sample documents</b> (Asha Rao's passport, payslip PDF and electricity bill, all fictional).</li>
+    <li>Open a form below and click the Fillmore icon on it. Answer the questions in the panel, then press <b>Fill</b>. Submitting goes nowhere.</li>
+    <li>For the penguin, allow Fillmore on this site once (Form tab → <b>Always allow</b>); it then appears on these pages by itself.</li>
+  </ol>
+  <div class="forms">
+    <a href="visa.html"><b>Examplia e-Visa</b>A long government-style form: split date-of-birth selects, family sections, a hidden prompt-injection honeypot, CAPTCHA, card fields and a declaration.</a>
+    <a href="job.html"><b>Northwind job application</b>An applicant-tracking-style form: aria-labelledby labels, script-controlled inputs, a field in a web component, a phone code select.</a>
+    <a href="app.html"><b>Daybook calendar (not a form)</b>A web app with a search box, a quick-add box and a hidden drawer of fields. The penguin should stay away, "?" badges included.</a>
+    <a href="insurance.html"><b>Examplia travel insurance</b>For the penguin: fill it in by hand and submit, and it offers to remember what you typed; come back and it fills it for you. Jargon fields (PED, nominee, GSTIN) get a "?".</a>
+  </div>
+</main>
+</body>
+</html>

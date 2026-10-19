@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Daybook · Calendar (demo app, not a form)</title>
+<link rel="stylesheet" href="demo.css" />
+<style>
+  .app { display: flex; height: 70vh; border: 1px solid #ddd; background: #fff; }
+  .main { flex: 1; padding: 16px; }
+  .side { width: 260px; border-left: 1px solid #ddd; padding: 12px; position: relative; overflow: hidden; }
+  /* An off-canvas drawer, slid out of the clipped side bar: its fields exist but can't be seen. */
+  .drawer { position: absolute; top: 0; left: 280px; width: 260px; padding: 12px; }
+  .ev { background: #e8eefc; border-radius: 6px; padding: 6px 8px; margin: 6px 0; }
+</style>
+</head>
+<body>
+<div class="demo-flag">DEMO APP for testing Fillmore: a calendar, not a form. The penguin should stay away.</div>
+<main class="wrap">
+  <div class="app">
+    <div class="main">
+      <input type="search" placeholder="Search events" aria-label="Search events" />
+      <div class="ev">09:00 Stand-up</div>
+      <div class="ev">13:00 Lunch</div>
+      <input placeholder="Quick add: lunch tomorrow 1pm" aria-label="Quick add" />
+    </div>
+    <aside class="side">
+      <b>Useful shortcuts</b>
+      <p>Command menu ⌘K</p>
+      <div class="drawer">
+        <label>GSTIN <input name="gstin" /></label>
+        <label>Place of issue <input name="poi" /></label>
+        <label>Nominee <input name="nominee" /></label>
+        <label>PED <input name="ped" /></label>
+      </div>
+    </aside>
+  </div>
+</main>
+</body>
+</html>

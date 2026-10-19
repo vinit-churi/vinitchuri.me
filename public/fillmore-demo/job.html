@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Northwind Careers · Apply: Senior Analyst (demo form)</title>
+<link rel="stylesheet" href="demo.css" />
+<style>
+  body { --accent: #5b2a86; }
+  .banner { background: #fff; border-bottom: 1px solid #ddd; }
+  .banner b { color: var(--accent); }
+  .q { display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; }
+  .q .lbl { font-weight: 600; font-size: 14px; }
+  .phone { display: flex; gap: 6px; }
+  .phone select { width: 110px; }
+  .card { background: #fff; border: 1px solid #e3e0ea; border-radius: 10px; padding: 18px 20px; margin-bottom: 16px; }
+</style>
+</head>
+<body>
+<div class="demo-flag">DEMO FORM for testing Fillmore. Fictional company, nothing is sent anywhere.</div>
+<header class="banner"><div class="wrap"><b>Northwind</b> Careers · Senior Analyst, Insights · Mumbai</div></header>
+
+<main class="wrap">
+  <h1>Apply: My information</h1>
+  <p class="lede">This page imitates a modern applicant-tracking form: labels that aren't &lt;label&gt;s, inputs controlled by script, and a field inside a web component.</p>
+
+  <form id="apply" novalidate>
+    <div class="card">
+      <h2>Legal name</h2>
+      <div class="q"><div class="lbl" id="l-first">First Name *</div><input data-model="first" aria-labelledby="l-first" /></div>
+      <div class="q"><div class="lbl" id="l-middle">Middle Name</div><input data-model="middle" aria-labelledby="l-middle" /></div>
+      <div class="q"><div class="lbl" id="l-last">Last Name *</div><input data-model="last" aria-labelledby="l-last" /></div>
+    </div>
+
+    <div class="card">
+      <h2>Contact information</h2>
+      <div class="q"><div class="lbl">Email Address *</div><nw-email></nw-email></div>
+      <div class="q">
+        <div class="lbl" id="l-phone">Phone *</div>
+        <div class="phone">
+          <select data-model="dial" aria-label="Country phone code">
+            <option value="">Code</option><option value="+1">+1 (US)</option><option value="+44">+44 (UK)</option><option value="+91">+91 (India)</option><option value="+65">+65 (Singapore)</option>
+          </select>
+          <input data-model="phone" type="tel" aria-labelledby="l-phone" placeholder="Phone number" />
+        </div>
+      </div>
+      <div class="q"><div class="lbl" id="l-a1">Address Line 1 *</div><input data-model="a1" aria-labelledby="l-a1" autocomplete="address-line1" /></div>
+      <div class="q"><div class="lbl" id="l-city">City *</div><input data-model="city" aria-labelledby="l-city" /></div>
+      <div class="q"><div class="lbl" id="l-state">State *</div><input data-model="state" aria-labelledby="l-state" /></div>
+      <div class="q"><div class="lbl" id="l-zip">Postal Code *</div><input data-model="zip" aria-labelledby="l-zip" /></div>
+      <div class="q">
+        <div class="lbl" id="l-country">Country *</div>
+        <select data-model="country" aria-labelledby="l-country">
+          <option value="">Select one</option><option value="IN">India</option><option value="US">United States</option><option value="GB">United Kingdom</option><option value="SG">Singapore</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Experience</h2>
+      <div class="q"><div class="lbl" id="l-co">Current Company</div><input data-model="company" aria-labelledby="l-co" /></div>
+      <div class="q"><div class="lbl" id="l-title">Current Job Title</div><input data-model="title" aria-labelledby="l-title" /></div>
+      <div class="q"><div class="lbl" id="l-since">Start date</div><input data-model="since" type="month" aria-labelledby="l-since" /></div>
+      <div class="q"><div class="lbl" id="l-li">LinkedIn Profile</div><input data-model="linkedin" aria-labelledby="l-li" type="url" /></div>
+      <div class="q"><div class="lbl" id="l-sal">Expected salary (annual, INR)</div><input data-model="salary" aria-labelledby="l-sal" /></div>
+      <div class="q">
+        <div class="lbl" id="l-auth">Are you legally authorised to work in India? *</div>
+        <div role="radiogroup" aria-labelledby="l-auth">
+          <label><input type="radio" name="auth" value="yes" /> Yes</label>
+          <label><input type="radio" name="auth" value="no" /> No</label>
+        </div>
+      </div>
+      <div class="q"><div class="lbl" id="l-cv">Resume / CV</div><input type="file" accept=".pdf,.doc,.docx" aria-labelledby="l-cv" /></div>
+      <div class="q"><div class="lbl" id="l-why">Why Northwind?</div><textarea data-model="why" rows="4" aria-labelledby="l-why"></textarea></div>
+    </div>
+
+    <div class="actions">
+      <button type="submit">Submit application</button>
+      <span id="status" role="status"></span>
+    </div>
+  </form>
+
+  <h2>Live form state</h2>
+  <p class="lede">What the page's own script believes the values are. If Fillmore only changed the DOM and not the app's state, these would stay empty.</p>
+  <pre id="state">{}</pre>
+</main>
+
+<script>
+  // A tiny "controlled input" model, like React: state is updated only from input/change events,
+  // and every render writes state back into the inputs.
+  const state = {};
+  const render = () => {
+    for (const el of document.querySelectorAll("[data-model]")) {
+      const k = el.dataset.model;
+      if (el.value !== (state[k] ?? "")) el.value = state[k] ?? "";
+    }
+    document.getElementById("state").textContent = JSON.stringify(state, null, 2);
+  };
+  document.addEventListener("input", (e) => {
+    const k = e.target?.dataset?.model;
+    if (k) { state[k] = e.target.value; render(); }
+  });
+  document.addEventListener("change", (e) => {
+    const k = e.target?.dataset?.model;
+    if (k) { state[k] = e.target.value; render(); }
+    if (e.target?.name === "auth") { state.auth = e.target.value; render(); }
+  });
+  // Re-render on a timer, as frameworks do: a fill that skipped the events would be wiped out.
+  setInterval(render, 500);
+
+  // A web component with its own shadow DOM.
+  customElements.define("nw-email", class extends HTMLElement {
+    constructor() {
+      super();
+      const root = this.attachShadow({ mode: "open" });
+      root.innerHTML = `<style>input{font:inherit;width:100%;padding:8px 10px;border:1px solid #bbb;border-radius:6px;box-sizing:border-box}</style>
+        <input type="email" name="email" aria-label="Email Address" autocomplete="email" />`;
+      root.querySelector("input").addEventListener("input", (e) => { state.email = e.target.value; render(); });
+    }
+  });
+
+  window.__submitted = false;
+  document.getElementById("apply").addEventListener("submit", (e) => {
+    e.preventDefault();
+    window.__submitted = true;
+    document.getElementById("status").textContent = "Submitted (demo).";
+  });
+  window.__state = state;
+</script>
+</body>
+</html>
