@@ -3,6 +3,7 @@ import type { Agent } from "@/content/agents";
 import { site } from "@/content/site";
 
 const statusDot: Record<Agent["status"], string> = {
+  Live: "#2E9E5B",
   "In the lab": "#6C63FF",
   Concept: "#A8A498",
 };

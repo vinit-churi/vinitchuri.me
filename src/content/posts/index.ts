@@ -1,6 +1,9 @@
 import type { ComponentType } from "react";
 import type { PostMeta } from "./types";
 
+import * as fillmoreGuessing from "./fillmore-without-guessing";
+import * as fillmoreMatching from "./fillmore-measuring-field-matching";
+import * as fillmoreAutofill from "./fillmore-vs-autofill";
 import * as traceBands from "./tracesarkar-bands-not-percentages";
 import * as traceNoModel from "./tracesarkar-no-model-in-the-path";
 import * as traceSafe from "./tracesarkar-safe-by-construction";
@@ -15,6 +18,9 @@ import * as reelExperiments from "./reelforge-39-experiments";
 export type Post = PostMeta & { Body: ComponentType };
 
 const modules = [
+  fillmoreGuessing,
+  fillmoreMatching,
+  fillmoreAutofill,
   traceBands,
   viharLedger,
   reelExperiments,

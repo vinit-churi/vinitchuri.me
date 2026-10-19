@@ -1,6 +1,6 @@
 import type { ProductSlug } from "./products";
 
-export type AgentStatus = "In the lab" | "Concept";
+export type AgentStatus = "Live" | "In the lab" | "Concept";
 
 export type Agent = {
   slug: string;
@@ -17,11 +17,16 @@ export type Agent = {
   status: AgentStatus;
   /** The agent's own page, once it has one. */
   href?: string;
+  /** Where to install it, once it has shipped. */
+  install?: string;
 };
+
+/** Fillmore on the Chrome Web Store. */
+export const FILLMORE_STORE_URL = "https://chromewebstore.google.com/detail/fillmore/jcdahajlfgjapnefcpbiahabmcappmna";
 
 /**
  * Autonomous agents: each does one job end to end and hands the result to a person.
- * None has shipped yet; keep `status` honest as they move out of the lab.
+ * Fillmore has shipped (Chrome Web Store); the rest are concepts. Keep `status` honest as they move.
  */
 export const agents: Agent[] = [
   {
@@ -29,10 +34,11 @@ export const agents: Agent[] = [
     name: "Fillmore",
     mark: "FI",
     tint: "#E4E1FB",
-    kicker: "Form-filling agent · in your browser",
+    kicker: "Form-filling agent · Chrome extension",
     oneLiner: "Fills long web forms from your own documents, asks when it isn’t sure, and leaves Submit to you.",
-    status: "In the lab",
+    status: "Live",
     href: "/agents/fillmore",
+    install: FILLMORE_STORE_URL,
   },
   {
     slug: "coding-agent",

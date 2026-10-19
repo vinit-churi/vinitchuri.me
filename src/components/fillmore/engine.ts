@@ -402,16 +402,17 @@ function fillSplash(ctx: Ctx, S: Splash, p: number, grow = 1) {
 
 /* ---------- The short film, drawn on a 1600×900 stage ---------- */
 
-export const FILM_LENGTH = 45;
+export const FILM_LENGTH = 40;
 
 export const FILM_SUBTITLES: [number, number, string][] = [
-  [0.4, 6, "This is Fillmore. Fillmore is a very careful penguin."],
-  [6.2, 13, "Then the forms arrive. Forty-seven fields you have typed before."],
-  [13.2, 21, "So you give Fillmore your documents once. It reads them and remembers what matters."],
-  [21.2, 27, "Open any form. Fillmore fills what it knows and shows where each answer came from."],
-  [27, 32, "When it isn’t sure, it asks you. It never guesses."],
-  [32.2, 38, "And Fillmore never presses Submit. You check it, and you send it."],
-  [38.5, 44.5, "Fillmore. A form-filling agent by Vinit Churi, in the lab."],
+  [0.3, 4.2, "This is Fillmore. A very careful penguin."],
+  [4.4, 9.4, "Then the forms arrive. Forty-seven fields you have typed before."],
+  [9.6, 15.8, "Give Fillmore your documents once. It reads them on your device and remembers what matters."],
+  [16, 19.9, "Open any form. It fills what it knows and shows where each answer came from."],
+  [20.1, 22.6, "When it isn’t sure, it asks. It never guesses."],
+  [22.8, 28.4, "And it never presses Submit. You check it, and you send it."],
+  [28.6, 36.6, "What it can already do, and what we measured."],
+  [36.8, 40, "Fillmore. Free on the Chrome Web Store."],
 ];
 
 /** A pose that starts at a scene-local time. */
@@ -604,22 +605,22 @@ function makeStage(cast: Cast) {
     const fade = (a: number, b: number, f = 0.4) => clamp(Math.min((t - a) / f, (b - t) / f));
 
     // 1. Meet Fillmore
-    let a = fade(0, 6.4);
+    let a = fade(0, 4.4);
     if (a > 0) {
       ctx.save();
       ctx.globalAlpha = a;
-      const pop = back(seg(t, 0.3, 1.2));
-      const zoom = 1 + seg(t, 0, 6.4) * 0.06;
+      const pop = back(seg(t, 0.2, 0.9));
+      const zoom = 1 + seg(t, 0, 4.4) * 0.06;
       ctx.translate(800, 470);
       ctx.scale(zoom, zoom);
       ctx.translate(-800, -470);
       shadow(ctx, 800, 720, 170 * pop);
       penguin(ctx, 800, 722 + Math.sin(t * 2.4) * 3, 470 * pop, { sq: Math.sin(t * 2.4) * 0.012 });
-      const ta = seg(t, 1.2, 2.0);
+      const ta = seg(t, 0.7, 1.3);
       ctx.globalAlpha = a * ta;
       text(ctx, "This is Fillmore.", 800, 175 - (1 - eo(ta)) * 20, 92, { a: "center", f: F.serif, w: 400 });
-      const l1 = seg(t, 3, 3.6);
-      const l2 = seg(t, 3.7, 4.3);
+      const l1 = seg(t, 1.6, 2.1);
+      const l2 = seg(t, 2.2, 2.7);
       ctx.lineWidth = 2.5;
       ctx.strokeStyle = INK;
       if (l1) {
@@ -642,14 +643,14 @@ function makeStage(cast: Cast) {
     }
 
     // 2. The forms arrive
-    a = fade(6, 13.4);
+    a = fade(4, 9.6);
     if (a > 0) {
-      const lt = t - 6;
+      const lt = t - 4;
       ctx.save();
       ctx.globalAlpha = a;
       const r = rng(5);
       for (let i = 0; i < 16; i++) {
-        const p = clamp((lt - (0.6 + i * 0.32)) / 0.9);
+        const p = clamp((lt - (0.4 + i * 0.22)) / 0.7);
         const x = 170 + r() * 560;
         const y1 = 745 - Math.floor(i / 3) * 12;
         const rot = (r() - 0.5) * 0.5 * (1 - p) + (r() - 0.5) * 0.12;
@@ -663,7 +664,7 @@ function makeStage(cast: Cast) {
         ctx.fillRect(-110, 6, 80, 6);
         ctx.restore();
       }
-      const fy = 900 - eo(seg(lt, 0, 1.0)) * 790;
+      const fy = 900 - eo(seg(lt, 0, 0.8)) * 790;
       inkBox(ctx, 870, fy, 560, 900, 18, "#fffdf8");
       rr(ctx, 872, fy + 2, 556, 74, 16);
       ctx.fillStyle = "#ece6d8";
@@ -672,7 +673,7 @@ function makeStage(cast: Cast) {
       ctx.save();
       rr(ctx, 872, fy + 78, 556, 820, 0);
       ctx.clip();
-      const scroll = Math.max(0, lt - 1.2) * 140;
+      const scroll = Math.max(0, lt - 0.9) * 170;
       const labels = ["Full name", "Date of birth", "Passport number", "Place of issue", "Address line 1", "Address line 2", "Employer", "Date joined", "Father’s name", "Annual income", "Purpose of visit", "Previous visits"];
       for (let i = 0; i < 30; i++) {
         const y = fy + 120 + i * 92 - scroll;
@@ -680,15 +681,15 @@ function makeStage(cast: Cast) {
         field(ctx, 905, y + 26, 490, labels[i % labels.length], "", 0, "", "");
       }
       ctx.restore();
-      const cnt = Math.min(47, 1 + Math.floor(Math.max(0, lt - 1.2) * 7));
+      const cnt = Math.min(47, 1 + Math.floor(Math.max(0, lt - 0.9) * 10));
       inkBox(ctx, 1240, fy - 34, 210, 52, 26, INK, 0);
       text(ctx, `Field ${cnt} of 47`, 1345, fy - 1, 21, { a: "center", c: PAPER, w: 500, f: F.mono });
-      const shake = lt > 3 ? Math.sin(lt * 38) * 3 * seg(lt, 3, 4) : 0;
+      const shake = lt > 2.2 ? Math.sin(lt * 38) * 3 * seg(lt, 2.2, 3) : 0;
       shadow(ctx, 430, 735, 140);
-      act(ctx, [[0, "checklist"], [2.9, "sweat"], [5.1, "panic"]], lt, 430 + shake, 736, 360, { sq: lt > 3 ? 0.03 * seg(lt, 3, 3.6) : 0 });
-      if (lt > 3.4) {
+      act(ctx, [[0, "checklist"], [2.1, "sweat"], [3.7, "panic"]], lt, 430 + shake, 736, 360, { sq: lt > 2.2 ? 0.03 * seg(lt, 2.2, 2.7) : 0 });
+      if (lt > 2.5) {
         for (let i = 0; i < 3; i++) {
-          const p = ((lt - 3.4) * 0.9 + i * 0.33) % 1;
+          const p = ((lt - 2.5) * 0.9 + i * 0.33) % 1;
           ctx.globalAlpha = a * (1 - p);
           ctx.fillStyle = "#8fc0e8";
           ctx.strokeStyle = INK;
@@ -707,25 +708,25 @@ function makeStage(cast: Cast) {
     }
 
     // 3. Documents in, read, remembered
-    a = fade(13, 21.4);
+    a = fade(9.2, 16);
     if (a > 0) {
-      const lt = t - 13;
+      const lt = t - 9.2;
       ctx.save();
       ctx.globalAlpha = a;
       const docs: [string, number, number, string, string][] = [
-        ["passport", 230, 0.4, "Name · Asha Rao", "Passport · Z4821937"],
-        ["id", 470, 1.0, "Date of birth · 12 Apr 1994", ""],
-        ["payslip", 700, 1.6, "Employer · Kestrel Labs", "Joined · Jun 2021"],
-        ["bill", 920, 2.2, "Address · 14 Lake Rd, Pune", ""],
+        ["passport", 230, 0.3, "Name · Asha Rao", "Passport · Z4821937"],
+        ["id", 470, 0.65, "Date of birth · 12 Apr 1994", ""],
+        ["payslip", 700, 1.0, "Employer · Kestrel Labs", "Joined · Jun 2021"],
+        ["bill", 920, 1.35, "Address · 14 Lake Rd, Pune", ""],
       ];
       const chips: [string, number, number, number][] = [];
       docs.forEach(([k, x, st, c1, c2], i) => {
-        const p = eo(seg(lt, st, st + 0.7));
+        const p = eo(seg(lt, st, st + 0.6));
         if (p <= 0) return;
         const dx = -300 + (x + 300) * p;
         const dy = 380 - Math.sin(p * Math.PI) * 120;
         doc(ctx, k, dx, dy, (1 - p) * -0.6 + (i % 2 ? 0.05 : -0.05));
-        const sp = seg(lt, st + 2.4, st + 3.2);
+        const sp = seg(lt, st + 1.5, st + 2.1);
         if (sp > 0 && sp < 1) {
           const by = dy - 115 + sp * 230;
           const g = ctx.createLinearGradient(0, by - 24, 0, by + 4);
@@ -737,15 +738,15 @@ function makeStage(cast: Cast) {
           ctx.fillRect(dx - 125, by, 250, 3);
         }
         [c1, c2].forEach((c, j) => {
-          if (c) chips.push([c, dx, dy, st + 3.0 + j * 0.25]);
+          if (c) chips.push([c, dx, dy, st + 1.9 + j * 0.2]);
         });
       });
-      const px = 1150 + (1 - eo(seg(lt, 2.4, 3.2))) * 500;
+      const px = 1150 + (1 - eo(seg(lt, 1.4, 2.0))) * 500;
       inkBox(ctx, px, 140, 400, 470, 22, "#fff");
       text(ctx, "Your profile", px + 28, 192, 28, { w: 800 });
       text(ctx, "kept on your device", px + 28, 222, 15, { c: "#5b5953", w: 500, f: F.mono });
       chips.forEach(([c, dx, dy, st], i) => {
-        const q = eio(seg(lt, st, st + 0.8));
+        const q = eio(seg(lt, st, st + 0.7));
         if (q <= 0) return;
         const tx = px + 28;
         const ty = 252 + i * 54;
@@ -759,18 +760,18 @@ function makeStage(cast: Cast) {
         text(ctx, c, x + 14, y + 26, 17, { w: 500, f: F.mono, c: q >= 1 ? GREEN : BLUE });
       });
       shadow(ctx, 1350, 845, 90);
-      act(ctx, [[0, "stack"], [2.6, "inspect"], [5.6, "checklist"]], lt, 1350, 846, 230, { flip: true });
+      act(ctx, [[0, "stack"], [1.6, "inspect"], [4.6, "checklist"]], lt, 1350, 846, 230, { flip: true });
       ctx.restore();
     }
 
     // 4–5. The browser form: fill, ask, hand over Submit
-    a = fade(21, 38.4);
+    a = fade(15.6, 28.8);
     if (a > 0) {
-      const lt = t - 21;
+      const lt = t - 15.6;
       ctx.save();
       ctx.globalAlpha = a;
       const bx = 110;
-      const by = 70 + (1 - eo(seg(lt, 0, 0.8))) * 80;
+      const by = 70 + (1 - eo(seg(lt, 0, 0.7))) * 80;
       inkBox(ctx, bx, by, 1060, 780, 22, "#fff");
       rr(ctx, bx + 2, by + 2, 1056, 60, 20);
       ctx.fillStyle = "#ece6d8";
@@ -785,8 +786,8 @@ function makeStage(cast: Cast) {
       ctx.fillStyle = "#fff";
       ctx.fill();
       text(ctx, "apply.visa-portal.example / step-2", bx + 152, by + 39, 16, { c: "#5b5953", w: 500, f: F.mono });
-      inkBox(ctx, bx + 980, by + 12, 60, 38, 12, lt > 1 ? RED : "#fff", 2.5);
-      text(ctx, "F", bx + 1010, by + 39, 22, { a: "center", w: 800, c: lt > 1 ? "#fff" : INK });
+      inkBox(ctx, bx + 980, by + 12, 60, 38, 12, lt > 0.8 ? RED : "#fff", 2.5);
+      text(ctx, "F", bx + 1010, by + 39, 22, { a: "center", w: 800, c: lt > 0.8 ? "#fff" : INK });
       text(ctx, "Visa application", bx + 50, by + 130, 38, { w: 800 });
       text(ctx, "Step 2 of 6 · Personal details", bx + 50, by + 164, 17, { c: "#5b5953", w: 500, f: F.mono });
       const fields: [string, string, string][] = [
@@ -797,14 +798,14 @@ function makeStage(cast: Cast) {
         ["Home address", "14 Lake Rd, Pune 411001", "you chose"],
         ["Purpose of visit", "Conference", "profile"],
       ];
-      const askT = 6.2;
-      const answerT = 9.6;
+      const askT = 4.4;
+      const answerT = 7.0;
       const stateOf = (typed: number) => (typed > 0 && typed < 1 ? "on" : typed >= 1 ? "ok" : "");
       fields.forEach(([lab, val, src], i) => {
         const x = bx + 50 + (i % 2) * 490;
         const y = by + 240 + Math.floor(i / 2) * 130;
-        const st = 1.3 + i * 0.75;
-        let typed = seg(lt, st, st + 0.6);
+        const st = 1.0 + i * 0.55;
+        let typed = seg(lt, st, st + 0.45);
         let state = stateOf(typed);
         if (i === 4) {
           if (lt < askT) {
@@ -814,19 +815,19 @@ function makeStage(cast: Cast) {
             typed = 0;
             state = "ask";
           } else {
-            typed = seg(lt, answerT, answerT + 0.6);
+            typed = seg(lt, answerT, answerT + 0.5);
             state = typed < 1 ? "on" : "ok";
           }
         }
         if (i === 5) {
-          typed = seg(lt, answerT + 0.9, answerT + 1.4);
+          typed = seg(lt, answerT + 0.7, answerT + 1.1);
           state = stateOf(typed);
         }
         field(ctx, x, y, 450, lab, val, typed, state, state === "ask" ? "2 found" : src);
         if (state === "ask") text(ctx, "?  Waiting for you", x + 18, y + 37, 20, { c: AMBER, w: 700 });
       });
-      const allDone = lt > answerT + 1.6;
-      const clicked = lt > 15.2;
+      const allDone = lt > answerT + 1.3;
+      const clicked = lt > 11.5;
       const sbx = bx + 50;
       const sby = by + 650;
       if (allDone) {
@@ -844,39 +845,162 @@ function makeStage(cast: Cast) {
       }
       text(ctx, clicked ? "Submitted ✓" : "Submit", sbx + 120, sby + 41, 24, { a: "center", c: "#fff", w: 700 });
       if (allDone && !clicked) text(ctx, "Fillmore never clicks this.", sbx + 268, sby + 40, 19, { c: "#5b5953", w: 500, f: F.mono });
-      const px = 1370 + (1 - eo(seg(lt, 0.5, 1.3))) * 300;
+      const px = 1370 + (1 - eo(seg(lt, 0.4, 1.1))) * 300;
       shadow(ctx, px, 800, 110);
-      const beats: Beat[] = [[0, "laptop"], [askT, "worried"], [answerT, "laptop"], [answerT + 1.6, "checklist"], [15.3, "tablet"]];
+      const beats: Beat[] = [[0, "laptop"], [askT, "worried"], [answerT, "laptop"], [answerT + 1.3, "checklist"], [11.6, "tablet"]];
       act(ctx, beats, lt, px, 802, 330, { flip: true, rot: lt > askT && lt < answerT ? Math.sin(lt * 3) * 0.04 : 0 });
-      bubble(ctx, px - 30, 400, 330, ["Two addresses found.", "Which one is home?"], lt > askT + 0.2 && lt < answerT ? seg(lt, askT + 0.2, askT + 0.6) : 0);
-      if (lt > askT + 1.4 && lt < answerT + 0.5) {
+      bubble(ctx, px - 30, 400, 330, ["Two addresses found.", "Which one is home?"], lt > askT + 0.2 && lt < answerT ? seg(lt, askT + 0.2, askT + 0.5) : 0);
+      if (lt > askT + 1.0 && lt < answerT + 0.5) {
         const oy = by + 240 + 2 * 130 + 70;
         ctx.save();
-        ctx.globalAlpha = a * seg(lt, askT + 1.4, askT + 1.8);
+        ctx.globalAlpha = a * seg(lt, askT + 1.0, askT + 1.3);
         inkBox(ctx, bx + 50, oy, 450, 120, 14, "#fff", 2.5);
         rr(ctx, bx + 58, oy + 8, 434, 50, 10);
-        ctx.fillStyle = lt > answerT - 0.7 ? "#e3efe8" : "#f7f4ec";
+        ctx.fillStyle = lt > answerT - 0.6 ? "#e3efe8" : "#f7f4ec";
         ctx.fill();
         text(ctx, "14 Lake Rd, Pune · from bill", bx + 74, oy + 41, 19, { w: 500 });
         text(ctx, "Old: 3 MG Road, Bengaluru · ID card", bx + 74, oy + 99, 19, { w: 500, c: "#8d8a82" });
         ctx.restore();
-        const cp = eio(seg(lt, askT + 1.9, answerT - 0.8));
-        cursor(ctx, 700 + (bx + 300 - 700) * cp, 860 + (oy + 36 - 860) * cp, lt > answerT - 0.7 && lt < answerT - 0.4);
+        const cp = eio(seg(lt, askT + 1.4, answerT - 0.7));
+        cursor(ctx, 700 + (bx + 300 - 700) * cp, 860 + (oy + 36 - 860) * cp, lt > answerT - 0.6 && lt < answerT - 0.35);
       }
       if (allDone) {
-        const cp = eio(seg(lt, 13, 15));
+        const cp = eio(seg(lt, 9.6, 11.3));
         const cx = 700 + (sbx + 150 - 700) * cp;
         const cy = 900 + (sby + 34 - 900) * cp;
-        cursor(ctx, cx, cy, lt > 15 && lt < 15.35);
-        if (lt > 13) text(ctx, "you", cx + 30, cy + 58, 16, { w: 700, f: F.mono, c: BLUE });
+        cursor(ctx, cx, cy, lt > 11.3 && lt < 11.6);
+        if (lt > 9.6) text(ctx, "you", cx + 30, cy + 58, 16, { w: 700, f: F.mono, c: BLUE });
       }
       ctx.restore();
     }
 
-    // 6. Title card
-    a = fade(38, 46);
+    // 6. What it can do: five quick cards, each one a measured or tested capability.
+    a = fade(28.4, 37);
     if (a > 0) {
-      const lt = t - 38;
+      const lt = t - 28.4;
+      ctx.save();
+      ctx.globalAlpha = a;
+      const ha = eo(seg(lt, 0.1, 0.6));
+      ctx.globalAlpha = a * ha;
+      text(ctx, "What it can do", 560, 150 - (1 - ha) * 16, 64, { f: F.serif, w: 400 });
+      ctx.globalAlpha = a;
+      const starts = [0.5, 2.15, 3.8, 5.45, 7.1];
+      const ends = [...starts.slice(1), 9];
+      const cx = 560;
+      const cy = 200;
+      const cw = 920;
+      const chip = (s: string, x: number, y: number, fill: string, color: string, size = 19) => {
+        ctx.font = `500 ${size}px ${F.mono}`;
+        const w = ctx.measureText(s).width + 30;
+        rr(ctx, x, y, w, size + 22, (size + 22) / 2);
+        ctx.fillStyle = fill;
+        ctx.fill();
+        text(ctx, s, x + 15, y + size + 6, size, { w: 500, f: F.mono, c: color });
+        return w;
+      };
+      starts.forEach((st, i) => {
+        const p = Math.min(seg(lt, st, st + 0.3), 1 - seg(lt, ends[i] - 0.15, ends[i] + 0.1));
+        if (p <= 0) return;
+        ctx.save();
+        ctx.globalAlpha = a * p;
+        ctx.translate(still ? 0 : (1 - eo(seg(lt, st, st + 0.3))) * 60, 0);
+        inkBox(ctx, cx, cy, cw, 560, 24, "#fff");
+        const kicker = ["01 · READS DOCUMENTS", "02 · UNDERSTANDS FORMS", "03 · CHECKS BEFORE SUBMIT", "04 · REMEMBERS FILES", "05 · PRIVATE BY DESIGN"][i];
+        text(ctx, kicker, cx + 50, cy + 66, 20, { w: 600, f: F.mono, c: "#5b5953" });
+        const stat = ["MRZ, verified", "96%", "3 things left", "Resume, again", "On your device"][i];
+        text(ctx, stat, cx + 46, cy + 168, 92, { f: F.serif, w: 400, c: [INK, BLUE, AMBER, GREEN, INK][i] });
+        const lines = [
+          ["Reads the passport’s machine-readable lines", "and checks every check digit."],
+          ["of 257 differently named test fields recognised,", "and 0 filled wrongly without asking."],
+          ["Head for Submit and it lists what is still", "empty, wrong, or yours to do."],
+          ["Attach a file once. The next form that asks", "for one gets it when you press Fill."],
+          ["Your profile and files stay on this device,", "sealed with your passphrase if you set one."],
+        ][i];
+        lines.forEach((l, j) => text(ctx, l, cx + 50, cy + 236 + j * 40, 30, { w: 500 }));
+        const vy = cy + 350;
+        if (i === 0) {
+          const mrz = ["P<INDRAO<<ASHA<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", "Z4821937<3IND9404128F3203145<<<<<<<<<<<<<<00"];
+          const checks = [9, 19, 27, 42, 43];
+          mrz.forEach((line, j) => {
+            ctx.font = `500 25px ${F.mono}`;
+            const cwid = ctx.measureText("M").width;
+            for (let k = 0; k < line.length; k++) {
+              const hit = j === 1 && checks.includes(k);
+              const lit = hit && lt > st + 0.5 + checks.indexOf(k) * 0.12;
+              if (lit) {
+                rr(ctx, cx + 50 + k * cwid - 2, vy + j * 52 - 4, cwid + 4, 38, 6);
+                ctx.fillStyle = "#e3efe8";
+                ctx.fill();
+              }
+              text(ctx, line[k], cx + 50 + k * cwid, vy + 26 + j * 52, 25, { w: 500, f: F.mono, c: lit ? GREEN : INK });
+            }
+          });
+          text(ctx, "✓ check digits valid", cx + 50, vy + 150, 22, { w: 700, f: F.mono, c: GREEN });
+        } else if (i === 1) {
+          const names = ["txtDtOfBrth", "D.O.B.", "Birth Dt", "जन्म तिथि", "dateofbirth"];
+          let x = cx + 50;
+          names.forEach((n, k) => {
+            if (lt < st + 0.2 + k * 0.15) return;
+            x += chip(n, x, vy, "#f3eee3", INK) + 12;
+          });
+          ctx.lineWidth = 2.5;
+          ctx.strokeStyle = INK;
+          ctx.beginPath();
+          ctx.moveTo(cx + 60, vy + 62);
+          ctx.lineTo(cx + 60, vy + 96);
+          ctx.lineTo(cx + 90, vy + 96);
+          ctx.stroke();
+          if (lt > st + 0.9) chip("= date of birth", cx + 100, vy + 76, "#e8e5fb", BLUE, 21);
+        } else if (i === 2) {
+          const items: [string, string][] = [["Date of birth", "should look like DD/MM/YYYY"], ["Mobile number", "required, still empty"], ["Declaration", "yours to tick"]];
+          items.forEach(([n, why], k) => {
+            if (lt < st + 0.25 + k * 0.2) return;
+            const y = vy + k * 52;
+            ctx.fillStyle = "#d9a21b";
+            ctx.fillRect(cx + 50, y, 5, 40);
+            text(ctx, n, cx + 70, y + 28, 24, { w: 700 });
+            text(ctx, why, cx + 300, y + 28, 21, { w: 500, f: F.mono, c: "#5b5953" });
+          });
+        } else if (i === 3) {
+          const q = eio(seg(lt, st + 0.3, st + 1.0));
+          const fx = cx + 470;
+          text(ctx, "Resume / CV", fx, vy + 18, 18, { w: 500, f: F.mono, c: "#5b5953" });
+          rr(ctx, fx, vy + 30, 390, 56, 12);
+          ctx.fillStyle = "#fff";
+          ctx.fill();
+          ctx.lineWidth = 3;
+          ctx.strokeStyle = q >= 1 ? GREEN : "#cfc9bb";
+          ctx.stroke();
+          chip("📎 asha-cv.pdf", cx + 50 + (fx + 14 - cx - 50) * q, vy + 36 + (1 - q) * 70 * 0, q >= 1 ? "#e3efe8" : "#f3eee3", q >= 1 ? GREEN : INK, 20);
+        } else {
+          ctx.save();
+          ctx.translate(cx + 80, vy + 60);
+          ctx.lineWidth = 5;
+          ctx.strokeStyle = INK;
+          ctx.beginPath();
+          ctx.arc(0, -18, 20, Math.PI, 0);
+          ctx.stroke();
+          inkBox(ctx, -32, -18, 64, 54, 10, PAPER, 4);
+          ctx.restore();
+          text(ctx, "No account. No tracking. Nothing to sign up for.", cx + 140, vy + 70, 24, { w: 600, f: F.mono });
+        }
+        starts.forEach((_, k) => {
+          ctx.beginPath();
+          ctx.arc(cx + cw - 60 - (4 - k) * 22, cy + 58, 6, 0, 7);
+          ctx.fillStyle = k === i ? INK : "#d9d4c8";
+          ctx.fill();
+        });
+        ctx.restore();
+      });
+      shadow(ctx, 300, 800, 120);
+      act(ctx, [[0, "inspect"], [2.15, "laptop"], [3.8, "checklist"], [5.45, "stack"], [7.1, "tablet"]], lt, 300, 802, 380);
+      ctx.restore();
+    }
+
+    // 7. Title card
+    a = fade(36.6, 42);
+    if (a > 0) {
+      const lt = t - 36.6;
       ctx.save();
       ctx.globalAlpha = a;
       const pop = back(seg(lt, 0.2, 1));
@@ -886,7 +1010,7 @@ function makeStage(cast: Cast) {
       ctx.globalAlpha = a * ta;
       text(ctx, "Fillmore", 160, 430 + (1 - ta) * 30, 180, { f: F.serif, w: 400 });
       text(ctx, "The form-filling agent", 168, 500, 34, { w: 700 });
-      text(ctx, "by Vinit Churi · join the waitlist", 168, 548, 22, { w: 500, c: "#5b5953", f: F.mono });
+      text(ctx, "by Vinit Churi · free on the Chrome Web Store", 168, 548, 22, { w: 500, c: "#5b5953", f: F.mono });
       ctx.restore();
     }
   };

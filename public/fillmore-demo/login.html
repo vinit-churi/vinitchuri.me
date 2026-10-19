@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Examplia Assure · Sign in (demo)</title>
+<link rel="stylesheet" href="demo.css" />
+</head>
+<body>
+<div class="demo-flag">DEMO SIGN-IN for testing Fillmore. The penguin should stay away; nothing typed here is kept.</div>
+<main class="wrap" style="max-width:420px">
+  <h1>Sign in</h1>
+  <form id="login" novalidate>
+    <label>Email <input name="email" type="email" autocomplete="username" /></label>
+    <label>Password <input name="password" type="password" autocomplete="current-password" /></label>
+    <label><input type="checkbox" name="remember" /> Remember me</label>
+    <div class="actions"><button type="submit">Sign in</button> <a href="#">Forgot password?</a></div>
+    <p>New here? <a href="signup.html">Create an account</a></p>
+  </form>
+</main>
+<script>
+  window.__submitted = false;
+  document.getElementById("login").addEventListener("submit", (e) => { e.preventDefault(); window.__submitted = true; });
+</script>
+</body>
+</html>

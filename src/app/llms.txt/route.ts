@@ -22,9 +22,9 @@ ${products
   )
   .join("\n")}
 
-## Agents (in development, none shipped yet)
+## Agents (Fillmore is live; the rest are in development)
 
-${agents.map((a) => `- ${a.href ? `[${a.name}](${absoluteUrl(a.href)})` : a.name} (${a.status}): ${a.oneLiner}`).join("\n")}
+${agents.map((a) => `- ${a.href ? `[${a.name}](${absoluteUrl(a.href)})` : a.name} (${a.status}): ${a.oneLiner}${a.install ? ` Install: ${a.install}` : ""}`).join("\n")}
 
 ## Writing
 

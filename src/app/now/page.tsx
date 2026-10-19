@@ -61,12 +61,12 @@ export default function NowPage() {
         })}
         <Reveal as="li" delay={240}>
           <div className="rounded-3xl border border-dashed border-ink/30 p-6">
-            <p className="font-mono text-xs text-muted">In the lab</p>
+            <p className="font-mono text-xs text-muted">Live</p>
             <p className="mt-2 text-lg leading-snug">
               <Link href="/agents/fillmore" className="text-accent underline underline-offset-4">
                 Fillmore
               </Link>
-              , a form-filling agent for your browser. Designing it, with a waitlist open. The build notes will be in{" "}
+              , a form-filling agent for your browser, is live on the Chrome Web Store. The build notes are in{" "}
               <Link href="/writing" className="text-accent underline underline-offset-4">
                 Writing
               </Link>

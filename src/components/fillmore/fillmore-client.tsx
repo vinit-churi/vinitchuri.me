@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import styles from "@/app/agents/fillmore/fillmore.module.css";
-import { site } from "@/content/site";
+import { FILLMORE_STORE_URL } from "@/content/agents";
 import { FILM_LENGTH, FILM_SUBTITLES, POSES, createFilm, startSky, type Art, type Cast, type Pose } from "./engine";
 
 export const FILLMORE_IMAGE = POSES.hero.src;
@@ -40,35 +40,18 @@ export function PlayFilmButton({ className, children }: { className?: string; ch
   );
 }
 
-/**
- * The waitlist has no backend yet (the site is a static export), so joining opens an
- * email to me with the address filled in.
- */
-export function WaitlistForm({ id, dark }: { id: string; dark?: boolean }) {
-  const [note, setNote] = useState("");
+/** The one thing to do on this page: install it. Opens the Chrome Web Store in a new tab. */
+export function InstallButton({ dark, note = true }: { dark?: boolean; note?: boolean }) {
   return (
-    <>
-      <form
-        className={`${styles.waitlist} ${dark ? styles.dark : ""}`}
-        onSubmit={(e) => {
-          e.preventDefault();
-          const email = new FormData(e.currentTarget).get("email")?.toString().trim() ?? "";
-          const subject = encodeURIComponent("Fillmore waitlist");
-          const body = encodeURIComponent(`Please add ${email} to the Fillmore waitlist.`);
-          window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`;
-          setNote(`Your email app should open now. If it doesn’t, write to ${site.email}.`);
-        }}
-      >
-        <label htmlFor={id} className="sr-only">
-          Email address
-        </label>
-        <input id={id} name="email" type="email" required placeholder="you@email.com" autoComplete="email" />
-        <button type="submit">Join the waitlist</button>
-      </form>
-      <p className={styles.formNote} aria-live="polite">
-        {note}
-      </p>
-    </>
+    <div className={`${styles.install} ${dark ? styles.dark : ""}`}>
+      <a className={styles.installBtn} href={FILLMORE_STORE_URL} target="_blank" rel="noopener noreferrer">
+        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden>
+          <path d="M12 3v12m0 0-5-5m5 5 5-5M5 21h14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        Add to Chrome — free
+      </a>
+      {note && <span className={styles.installNote}>No account. Your details stay on your device.</span>}
+    </div>
   );
 }
 
@@ -90,18 +73,18 @@ export function FillmoreHero() {
           <p className={styles.crumb}>
             <Link href="/#agents">Agents</Link> / Form-filling agent
           </p>
-          <span className={styles.status}>
+          <span className={`${styles.status} ${styles.live}`}>
             <i aria-hidden />
-            In the lab · nothing to install yet
+            Live on the Chrome Web Store · free
           </span>
           <h1 id="fillmore-title" className={styles.title}>
             Fillmore<em>The form-filling agent that lives in your browser.</em>
           </h1>
           <p className={styles.lede}>
-            Upload your documents once. Fillmore reads them, fills any web form in seconds, asks when it isn’t sure, and
-            leaves the Submit button to you.
+            Add your documents once. Fillmore reads them on your device, fills long web forms in seconds, asks when it
+            isn’t sure, and leaves the Submit button to you.
           </p>
-          <WaitlistForm id="waitlist-hero" dark />
+          <InstallButton dark />
           <PlayFilmButton className={styles.play}>
             <span className={styles.disc} aria-hidden>
               <svg width="14" height="16" viewBox="0 0 14 16">
@@ -109,7 +92,7 @@ export function FillmoreHero() {
               </svg>
             </span>
             <span>
-              Watch Fillmore’s story<small>45-second short film</small>
+              Watch Fillmore’s story<small>{FILM_LENGTH}-second short film</small>
             </span>
           </PlayFilmButton>
         </div>
@@ -145,7 +128,7 @@ export function FillmoreFilm() {
         document.body.style.overflow = "";
         if (finished) {
           const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-          document.getElementById("join")?.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+          document.getElementById("install")?.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
         }
       },
     });

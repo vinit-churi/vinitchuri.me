@@ -65,10 +65,11 @@ export default function WorkPage() {
             4
           </span>
           <div>
-            <p className="font-mono text-xs text-muted">In the lab</p>
+            <p className="font-mono text-xs text-muted">Agents</p>
             <h2 className="mt-2 text-3xl font-bold tracking-[-0.04em]">The next ones are agents.</h2>
             <p className="mt-3 max-w-xl text-[17px] leading-relaxed text-ink-soft">
-              Fillmore, a form-filling agent, is the first. The rest are concepts for now.{" "}
+              Fillmore, a form-filling agent, is the first, and it is live on the Chrome Web Store. The rest are
+              concepts for now.{" "}
               <span className="font-semibold text-ink">
                 See the agents <span className="nudge">→</span>
               </span>

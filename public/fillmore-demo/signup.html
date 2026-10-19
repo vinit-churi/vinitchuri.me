@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Examplia Assure · Create your account (demo)</title>
+<link rel="stylesheet" href="demo.css" />
+</head>
+<body>
+<div class="demo-flag">DEMO SIGN-UP for testing Fillmore. Sign-up forms are fine: the penguin offers your name, email and phone.</div>
+<main class="wrap" style="max-width:520px">
+  <h1>Create your account</h1>
+  <form id="signup" novalidate>
+    <label>Full name <input name="name" autocomplete="name" /></label>
+    <label>Email <input name="email" type="email" autocomplete="email" /></label>
+    <label>Mobile number <input name="mobile" type="tel" /></label>
+    <label>Date of birth <input name="dob" placeholder="DD/MM/YYYY" /></label>
+    <label>Password <input name="password" type="password" autocomplete="new-password" /></label>
+    <label>Confirm password <input name="confirm" type="password" autocomplete="new-password" /></label>
+    <div class="actions"><button type="submit">Create account</button></div>
+    <p>Already have one? <a href="login.html">Sign in</a></p>
+  </form>
+</main>
+<script>
+  window.__submitted = false;
+  document.getElementById("signup").addEventListener("submit", (e) => { e.preventDefault(); window.__submitted = true; });
+</script>
+</body>
+</html>

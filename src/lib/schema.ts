@@ -1,3 +1,4 @@
+import { FILLMORE_STORE_URL } from "@/content/agents";
 import type { Post } from "@/content/posts";
 import { getProduct, type Product } from "@/content/products";
 import { absoluteUrl, site } from "@/content/site";
@@ -81,6 +82,24 @@ const productCategory: Record<Product["slug"], string> = {
   viharsync: "BusinessApplication",
   reelforge: "MultimediaApplication",
 };
+
+/** Fillmore, as an installable app: free, on the Chrome Web Store. */
+export function fillmoreSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "@id": `${absoluteUrl("/agents/fillmore")}#software`,
+    name: "Fillmore",
+    description:
+      "A Chrome extension that fills long web forms from your own documents, asks when it isn’t sure, and leaves Submit to you. Everything stays on your device.",
+    url: FILLMORE_STORE_URL,
+    mainEntityOfPage: absoluteUrl("/agents/fillmore"),
+    applicationCategory: "BrowserApplication",
+    operatingSystem: "Chrome",
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    creator: { "@id": meId },
+  };
+}
 
 export function productSchema(product: Product) {
   return {

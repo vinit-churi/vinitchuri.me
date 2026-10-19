@@ -1,44 +1,46 @@
 import Image from "next/image";
 import { JsonLd } from "@/components/json-ld";
+import Link from "next/link";
 import {
   FILLMORE_IMAGE,
   FillmoreFilm,
   FillmoreHero,
+  InstallButton,
   PlayFilmButton,
-  WaitlistForm,
 } from "@/components/fillmore/fillmore-client";
-import { POSES } from "@/components/fillmore/engine";
+import { FILM_LENGTH, POSES } from "@/components/fillmore/engine";
+import { FILLMORE_STORE_URL } from "@/content/agents";
 import { pageMetadata } from "@/lib/metadata";
-import { breadcrumbSchema } from "@/lib/schema";
+import { breadcrumbSchema, fillmoreSchema } from "@/lib/schema";
 import styles from "./fillmore.module.css";
 
 export const metadata = pageMetadata({
   title: "Fillmore — the form-filling agent",
   description:
-    "Fillmore is a browser extension Vinit Churi is designing. Upload your documents once; it fills any web form, asks when it isn’t sure, and leaves Submit to you. Join the waitlist.",
+    "Fillmore is a free Chrome extension by Vinit Churi. Add your documents once; it fills long web forms on your device, asks when it isn’t sure, and leaves Submit to you.",
   path: "/agents/fillmore",
-  keywords: ["Fillmore", "form-filling agent", "AI form filler", "browser extension", "autofill documents", "OCR"],
+  keywords: ["Fillmore", "form-filling agent", "AI form filler", "Chrome extension", "autofill documents", "visa form", "Hindi forms"],
 });
 
 const steps = [
   {
     title: "Set it up your way",
-    body: "Choose what Fillmore may use. Start with a saved profile and add more sources whenever you like.",
-    chips: [["Saved profile"], ["Documents"], ["Cloud folders · later", "later"]],
+    body: "Add documents, type details in, or just fill forms as usual: Fillmore remembers what you type, says so, and lets you undo it. Everything stays on this device, sealed with a passphrase if you set one.",
+    chips: [["Documents"], ["What you type"], ["Cloud folders · later", "later"]],
   },
   {
     title: "Drop in documents",
-    body: "Passports, ID cards, payslips, bills. Fillmore reads them with OCR and adds what it finds to your profile, where you can check and edit it.",
-    chips: [["PDF"], ["Photos"], ["Scans"]],
+    body: "Passports, ID cards, payslips, bills. Text and PDFs are read on your device, passports by their machine-readable lines with check digits. Photos and scans need your own Claude key. What it finds goes into a profile you can check and edit.",
+    chips: [["PDF"], ["Text"], ["Photos · your key"]],
   },
   {
     title: "Open any form",
-    body: "Fillmore finds the fields, fills what it knows in seconds, and tags each answer with the document it came from.",
-    chips: [["Chrome"], ["Firefox · later", "later"]],
+    body: "Fillmore finds the fields, even ones named txtDtOfBrth or labelled in Hindi or Marathi, fills what it is sure of, and marks each answer with where it came from. It can attach your resume or proof of address to upload fields too.",
+    chips: [["Chrome"], ["हिन्दी · मराठी"], ["Firefox · later", "later"]],
   },
   {
     title: "Review, then submit",
-    body: "Anything uncertain is flagged as a question for you. Fillmore never presses Submit. You read it through and send it.",
+    body: "Anything uncertain becomes a question you answer with a tap. Head for Submit and it lists what is still missing. It never presses Submit: you read it through and send it.",
     chips: [["You stay in charge"]],
   },
 ];
@@ -60,6 +62,7 @@ export default function FillmorePage() {
           { name: "Fillmore", path: "/agents/fillmore" },
         ])}
       />
+      <JsonLd data={fillmoreSchema()} />
       <FillmoreHero />
 
       <section className="mx-auto max-w-[1120px] px-6 py-26">
@@ -98,7 +101,7 @@ export default function FillmorePage() {
         <PlayFilmButton className={styles.poster}>
           <span className={styles.posterGlow} aria-hidden />
           <span className={styles.posterText}>
-            <small>A short film · 45 s</small>
+            <small>A short film · {FILM_LENGTH} s</small>
             <b>Fillmore and the 47-field form</b>
             <span>The whole idea, told by a nervous penguin. It plays right here on the page.</span>
           </span>
@@ -116,9 +119,9 @@ export default function FillmorePage() {
       <section id="how" className="mx-auto max-w-[1120px] scroll-mt-24 px-6 pb-26">
         <div className={styles.secHead}>
           <h2 className={styles.h2}>
-            How it <em>would</em> work
+            How it <em>works</em>
           </h2>
-          <p>Four steps, in the order you would meet them. This is the design I am working from; none of it is built yet.</p>
+          <p>Four steps, in the order you meet them.</p>
         </div>
         <ol className={styles.steps}>
           {steps.map((s, i) => (
@@ -143,7 +146,7 @@ export default function FillmorePage() {
           <h2 className={styles.h2}>
             What Fillmore <em>won’t</em> do
           </h2>
-          <p>The rules I am designing around. If a feature would break one of these, it doesn’t ship.</p>
+          <p>The rules it is built around, each one covered by its tests. If a feature would break one, it doesn’t ship.</p>
         </div>
         <div className={styles.promises}>
           {promises.map((p) => (
@@ -165,39 +168,43 @@ export default function FillmorePage() {
           <h2 className={styles.h2}>
             Where it <em>stands</em>
           </h2>
-          <p>
-            Fillmore is an idea I am designing in the lab. The waitlist helps me decide what to build first, and who
-            to show it to.
-          </p>
+          <p>Fillmore is out, free, and early. If it stumbles on a form you use, I want to hear about it.</p>
         </div>
         <div className={styles.statusStrip}>
           <div>
             <small>Stage</small>
-            <b>Idea and design</b>
-            <span>No extension to install yet.</span>
+            <b>Live on the Chrome Web Store</b>
+            <span>Free. No account to make.</span>
           </div>
           <div>
-            <small>First target</small>
-            <b>Chrome extension</b>
-            <span>Long personal forms: visas, tax, job applications.</span>
+            <small>Runs</small>
+            <b>On your device</b>
+            <span>Nothing leaves it unless you add your own Claude key.</span>
           </div>
           <div>
-            <small>Next step</small>
-            <b>Talking to people</b>
-            <span>Especially anyone who fills a lot of forms.</span>
+            <small>Next</small>
+            <b>Real-world forms</b>
+            <span>Send me a form it gets wrong, and it gets better at all of them.</span>
           </div>
         </div>
       </section>
 
-      <section id="join" className={`${styles.join} scroll-mt-16`}>
+      <section id="install" className={`${styles.join} scroll-mt-16`}>
         <div className={`mx-auto max-w-[1120px] px-6 py-26 ${styles.joinInner}`}>
           <div>
             <h2>Let Fillmore worry about forms.</h2>
             <p className={styles.joinLede}>
-              Join the waitlist and I will write when there is something to try. One email when it is ready, nothing
-              else.
+              Free on the Chrome Web Store. Add your documents, open a form, and press Fill. You read it through and
+              press Submit yourself.
             </p>
-            <WaitlistForm id="waitlist-join" />
+            <InstallButton />
+            <p className={styles.joinLinks}>
+              <a href="/fillmore-demo/">Try it on demo forms</a>
+              <Link href="/agents/fillmore/privacy">Privacy policy</Link>
+              <a href={FILLMORE_STORE_URL} target="_blank" rel="noopener noreferrer">
+                Fillmore on the Chrome Web Store
+              </a>
+            </p>
           </div>
           <Image
             className={styles.joinArt}

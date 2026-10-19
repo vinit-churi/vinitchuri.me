@@ -91,8 +91,8 @@ export default function Home() {
             <span className="text-muted">— what I’m making</span>
           </h2>
           <p className="max-w-sm text-[15px] leading-relaxed text-muted">
-            Autonomous agents built on new AI. Each does one job end to end, then hands it to a person. None has
-            shipped yet; this is the lab.
+            Autonomous agents built on new AI. Each does one job end to end, then hands it to a person. Fillmore is
+            out on the Chrome Web Store; the rest are still in the lab.
           </p>
         </Reveal>
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -199,8 +199,8 @@ export default function Home() {
                   ●
                 </span>
                 <span>
-                  <strong className="font-semibold">Fillmore:</strong> my form-filling agent is in the lab, with a
-                  waitlist open.
+                  <strong className="font-semibold">Fillmore:</strong> my form-filling agent is live on the Chrome Web
+                  Store, free.
                 </span>
               </li>
             </ul>
