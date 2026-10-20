@@ -6,11 +6,11 @@ import { breadcrumbSchema } from "@/lib/schema";
 export const metadata = pageMetadata({
   title: "Fillmore privacy policy",
   description:
-    "What the Fillmore browser extension keeps, where, and what it sends: everything stays on your device unless you add your own Claude API key.",
+    "What the Fillmore browser extension keeps, where, and what it sends: everything stays on your device unless you set up an AI provider of your choice.",
   path: "/agents/fillmore/privacy",
 });
 
-const UPDATED = "17 October 2026";
+const UPDATED = "21 October 2026";
 
 export default function FillmorePrivacyPage() {
   return (
@@ -52,7 +52,14 @@ export default function FillmorePrivacyPage() {
             only the details found in them are kept.
           </li>
           <li>
-            <strong>Settings</strong>, answers you asked it to remember for a site, and where you dragged the penguin.
+            <strong>A history of forms you send</strong> (you can turn it off): when, on which site and page (without
+            the address&rsquo;s query string), and each answer, marked as typed by you, filled by Fillmore or
+            pre-filled by the page. Never passwords, card numbers, one-time codes, CAPTCHAs, hidden fields or sign-in
+            forms. The newest 300 forms are kept.
+          </li>
+          <li>
+            <strong>Settings</strong>, answers you asked it to remember for a site, field names it learned from forms you
+            filled (names only, never values), and where you dragged the penguin.
           </li>
         </ul>
         <p>
@@ -62,12 +69,15 @@ export default function FillmorePrivacyPage() {
 
         <h2>What leaves your device</h2>
         <p>
-          Nothing, unless you add your own Anthropic (Claude) API key in Settings. With a key, and only for these tasks:
+          Nothing, unless you set up an AI provider in Settings: Anthropic (Claude), OpenAI, Google (Gemini), DeepSeek,
+          OpenRouter, Groq, Mistral, a service you name by its address, or Ollama running on your own computer (then
+          nothing leaves it). You choose one and use your own key. Only for these tasks:
         </p>
         <ul>
           <li>
-            <strong>Reading a photo or scanned PDF</strong> you add: the file is sent to Anthropic&rsquo;s API to read
-            the text. Text files and PDFs with text are read on your device.
+            <strong>Reading a photo or scanned PDF</strong> you add: the file (or, for providers other than Claude,
+            images of its first pages) is sent to the provider you chose to read the text. Text files and PDFs with
+            text are read on your device.
           </li>
           <li>
             <strong>Fields the built-in rules can&rsquo;t place</strong>: those fields&rsquo; labels, hint text, section
@@ -80,9 +90,9 @@ export default function FillmorePrivacyPage() {
           </li>
         </ul>
         <p>
-          These requests go straight from your browser to Anthropic under your key and are covered by{" "}
-          <a href="https://www.anthropic.com/legal/privacy">Anthropic&rsquo;s privacy policy</a>. Fillmore has no
-          analytics, no tracking, no ads, and sells or shares nothing.
+          These requests go straight from your browser to the provider you chose, under your key, and are covered by
+          that provider&rsquo;s own privacy policy. Fillmore asks Chrome for access to that provider&rsquo;s address only
+          when you save it. Fillmore has no analytics, no tracking, no ads, and sells or shares nothing.
         </p>
 
         <h2>What Fillmore does on web pages</h2>

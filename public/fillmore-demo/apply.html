@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lumen Studio · Join us (demo, site-builder style form)</title>
+<link rel="stylesheet" href="demo.css" />
+<style>
+  /* Like site builders (Framer, Webflow): a clipped card, a scrolling panel inside it, and a script
+     that sends the form itself, so no "submit" event ever fires. */
+  body { background: #0d1726; }
+  .card { width: 560px; margin: 40px auto; height: 520px; overflow: hidden; border-radius: 22px; background: #13233a; color: #e8eef8; }
+  form { height: 100%; overflow: auto; padding: 24px 28px; }
+  form input, form select { width: 100%; margin: 8px 0 18px; padding: 14px 16px; border-radius: 10px; border: 0; background: #2a3a52; color: #fff; font: 16px system-ui; }
+  .send { display: block; text-align: center; margin: 24px 0 8px; padding: 14px; border-radius: 999px; background: #e8eef8; color: #13233a; font: 600 17px system-ui; cursor: pointer; border: 0; width: 100% }
+  .hp { position: absolute; left: -9999px; }
+</style>
+</head>
+<body>
+<div class="demo-flag">DEMO FORM like site builders make them: a scrolling panel, and a Submit the page sends itself.</div>
+<div class="card">
+  <form id="f" novalidate>
+    <h2 style="font: 400 26px Georgia; margin-bottom: 14px">we'd like some details please</h2>
+    <input name="First Name" placeholder="first name" required />
+    <input name="Last Name" placeholder="last name" />
+    <input name="Email ID" type="email" placeholder="email id" required />
+    <input name="Phone Number" type="tel" placeholder="phone number" />
+    <input name="Linkedin Profile Link" type="url" placeholder="linkedin profile link" />
+    <input name="Current Residential Location" placeholder="current residential location" />
+    <input name="Portfolio link" type="url" placeholder="portfolio link" />
+    <input name="Expected salary" placeholder="expected per month salary (INR)" />
+    <input name="website" class="hp" tabindex="-1" autocomplete="off" />
+    <button type="submit" class="send" id="send">submit</button>
+    <div class="send" id="send-div" role="none" style="display:none">Submit application</div>
+    <p id="status"></p>
+  </form>
+</div>
+<script>
+  window.__sent = 0;
+  const send = (e) => { e.preventDefault(); e.stopPropagation(); window.__sent++; document.getElementById("status").textContent = "Sent (demo)."; };
+  // The click is intercepted, so the browser never fires "submit".
+  document.getElementById("send").addEventListener("click", send);
+  document.getElementById("send-div").addEventListener("click", send);
+  if (location.search.includes("div")) { document.getElementById("send").style.display = "none"; document.getElementById("send-div").style.display = "block"; }
+</script>
+</body>
+</html>
