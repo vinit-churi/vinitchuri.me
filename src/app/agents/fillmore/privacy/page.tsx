@@ -10,7 +10,7 @@ export const metadata = pageMetadata({
   path: "/agents/fillmore/privacy",
 });
 
-const UPDATED = "21 October 2026";
+const UPDATED = "22 October 2026";
 
 export default function FillmorePrivacyPage() {
   return (
@@ -56,6 +56,12 @@ export default function FillmorePrivacyPage() {
             the address&rsquo;s query string), and each answer, marked as typed by you, filled by Fillmore or
             pre-filled by the page. Never passwords, card numbers, one-time codes, CAPTCHAs, hidden fields or sign-in
             forms. The newest 300 forms are kept.
+          </li>
+          <li>
+            <strong>Your answers to screening questions</strong> (you can turn it off): short answers you typed into
+            questions like years of experience, yes/no experience questions, notice period or expected salary, kept so
+            the same question on another application can be filled. Never long text, health questions, passwords,
+            card numbers, codes or hidden fields. You can edit or delete each one in the History tab.
           </li>
           <li>
             <strong>Settings</strong>, answers you asked it to remember for a site, field names it learned from forms you
