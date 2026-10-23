@@ -5,7 +5,7 @@ export const site = {
   email: "hello@vinitchuri.me",
   tagline: "I build things that work",
   description:
-    "Vinit Churi is an engineer in Mumbai who builds products and AI agents for real problems: TraceSarkar for civic accountability, Hookline and ReelForge for short-form video, and Fillmore, a form-filling agent.",
+    "Vinit Churi is an engineer in Mumbai who builds products and AI agents for real problems: TraceSarkar for civic accountability, Hookline and ReelForge for short-form video, Fillmore, a form-filling agent, and infoyantra, a planned data layer over Indian government notices.",
   city: "Mumbai",
   country: "IN",
   timeZone: "Asia/Kolkata",
@@ -19,6 +19,7 @@ export const site = {
     "ReelForge",
     "Fillmore",
     "form-filling agent",
+    "infoyantra",
     "civic tech India",
     "building in public",
   ],

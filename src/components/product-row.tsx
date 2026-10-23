@@ -28,7 +28,10 @@ export function ProductRow({ product }: { product: Product }) {
           <span>{product.kicker}</span>
           <span>{product.credit}</span>
           <span className="inline-flex items-center gap-1.5">
-            <span className="pulse-dot inline-block h-1.5 w-1.5 rounded-full text-[#2f9e6a] bg-[#2f9e6a]" aria-hidden />
+            <span
+              className={`inline-block h-1.5 w-1.5 rounded-full ${product.concept ? "bg-[#A8A498]" : "pulse-dot bg-[#2f9e6a] text-[#2f9e6a]"}`}
+              aria-hidden
+            />
             {product.status}
           </span>
         </p>

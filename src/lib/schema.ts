@@ -81,6 +81,7 @@ const productCategory: Record<Product["slug"], string> = {
   hookline: "MultimediaApplication",
   viharsync: "BusinessApplication",
   reelforge: "MultimediaApplication",
+  infoyantra: "ReferenceApplication",
 };
 
 /** Fillmore, as an installable app: free, on the Chrome Web Store. */

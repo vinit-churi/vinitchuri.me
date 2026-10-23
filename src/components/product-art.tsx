@@ -74,6 +74,25 @@ export function ProductArt({ slug, className }: { slug: ProductSlug; className?:
     );
   }
 
+  if (slug === "infoyantra") {
+    // A notice, its corrigendum on top, and the one clause that decides it.
+    return (
+      <svg viewBox="0 0 220 200" fill="none" aria-hidden className={`text-[#FAF8F3] ${className ?? ""}`}>
+        <rect x="40" y="26" width="104" height="140" rx="6" stroke="currentColor" strokeWidth="3" />
+        {[50, 64, 78, 120, 134, 148].map((y) => (
+          <path key={y} d={`M54 ${y}h${y % 28 === 0 ? 56 : 76}`} stroke="currentColor" strokeWidth="3" opacity="0.55" />
+        ))}
+        <rect className="art-word" x="50" y="94" width="84" height="16" rx="3" fill="#F2C230" />
+        <g className="art-pin">
+          <rect x="112" y="60" width="72" height="96" rx="6" fill="#1E3A5F" stroke="currentColor" strokeWidth="3" />
+          <path d="M124 82h48M124 96h36M124 110h44" stroke="currentColor" strokeWidth="3" opacity="0.55" />
+          <path d="M124 132l10 10 22-24" stroke="#F2C230" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+        </g>
+        <path d="M10 190h200" stroke="currentColor" strokeWidth="3" />
+      </svg>
+    );
+  }
+
   return (
     <svg viewBox="0 0 220 200" fill="none" aria-hidden className={className}>
       <rect x="72" y="10" width="76" height="136" rx="14" stroke="#1A1A18" strokeWidth="3" />

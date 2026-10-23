@@ -186,7 +186,7 @@ export default function Home() {
             <ul className="flex flex-col gap-4 text-lg leading-snug">
               {products.map((p) => (
                 <li key={p.slug} className="flex gap-3.5">
-                  <span style={{ color: p.slug === "hookline" ? "#FF5A1F" : p.color }} aria-hidden>
+                  <span style={{ color: p.slug === "hookline" ? "#FF5A1F" : p.slug === "infoyantra" ? "#8FB3E0" : p.color }} aria-hidden>
                     ●
                   </span>
                   <span>
@@ -199,8 +199,8 @@ export default function Home() {
                   ●
                 </span>
                 <span>
-                  <strong className="font-semibold">Fillmore:</strong> my form-filling agent is live on the Chrome Web
-                  Store, free.
+                  <strong className="font-semibold">Fillmore:</strong> v0.8.1 is live on the Chrome Web Store, free: a
+                  history of the forms you send, and screening answers remembered for the next application.
                 </span>
               </li>
             </ul>

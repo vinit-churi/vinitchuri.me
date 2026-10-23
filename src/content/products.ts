@@ -1,4 +1,4 @@
-export type ProductSlug = "tracesarkar" | "hookline" | "viharsync" | "reelforge";
+export type ProductSlug = "tracesarkar" | "hookline" | "viharsync" | "reelforge" | "infoyantra";
 
 export const stages = ["Get annoyed", "Research", "Build", "Ship", "Tell people"] as const;
 export type Stage = (typeof stages)[number];
@@ -38,6 +38,8 @@ export type Product = {
   now: string;
   /** Team work that lives on Logicvell: kept for the writing about it, but not listed here. */
   listed?: false;
+  /** Planned, not built: no live link, no numbers, no "it runs" claims. */
+  concept?: true;
 };
 
 const allProducts: Product[] = [
@@ -47,7 +49,7 @@ const allProducts: Product[] = [
     color: "#F2C230",
     onColor: "#1A1A18",
     kicker: "Civic issues · Mumbai",
-    status: "Pilot · Borivali ward",
+    status: "Pilot · Borivali · 24 wards routed",
     url: "https://tracesarkar.vinitchuri.me",
     urlLabel: "tracesarkar.vinitchuri.me",
     oneLiner: "Photograph a pothole. Get back who is responsible, what they were paid to do, and what you can do about it.",
@@ -86,11 +88,12 @@ const allProducts: Product[] = [
       { date: "29 Sep 2026", stage: "Ship", title: "A host died; the bars were met", body: "Four days after we wrote down the risk, the shared host died. The API moved to Cloud Run. Same day: attribution and jurisdiction met their measured bars, and the pilot moved to Borivali." },
       { date: "5 Oct 2026", stage: "Build", title: "Real photographs, real bugs", body: "The first two real captures found three bugs the synthetic probes never could — including a road contractor named next to a garbage report. Probes test the join; photographs test the product." },
       { date: "14 Oct 2026", stage: "Ship", title: "Share kit, evidence PDF, all 24 wards", body: "Posts in English, Marathi and Hindi generated from facts, a deterministic evidence PDF, and road-defect routing for every BMC ward." },
+      { stage: "Build", title: "The Filing agent", body: "From a photo to the complaint itself: the right desk, the contract, the deadline, every fact sourced, drafted for you to send. Nothing is ever filed for you.", next: true },
       { stage: "Tell people", title: "One RWA, one journalist, one story", body: "No paid acquisition: growth comes from the share. Next is recruiting a handful of RWA secretaries and a public v0.1 before the 2027 monsoon.", next: true },
     ],
     builtBy: ["vinit-churi"],
     credit: "Solo",
-    now: "Building the operator console, and recruiting the first RWA secretaries for the Borivali pilot.",
+    now: "Building the Filing agent: from one photo to a sourced complaint draft you choose to send. Then the first RWA secretaries for the Borivali pilot.",
   },
   {
     slug: "hookline",
@@ -98,7 +101,7 @@ const allProducts: Product[] = [
     color: "#0B0B0C",
     onColor: "#FAF8F3",
     kicker: "Agentic video studio · Businesses",
-    status: "Private beta · landing page live",
+    status: "Research · landing page live",
     url: "https://hookline-landing.infoyantra.workers.dev",
     urlLabel: "See Hookline",
     oneLiner: "Steal the formula, not the video. Decode a reel that worked and rebuild it from your own clips.",
@@ -134,7 +137,7 @@ const allProducts: Product[] = [
     ],
     builtBy: ["vinit-churi", "kenil-joshi"],
     credit: "With Kenil Joshi",
-    now: "Taking the landing page to a private beta: a waitlist first, then the first decodes with real businesses.",
+    now: "Studying the market and the tools already out there before the private beta.",
   },
   {
     slug: "viharsync",
@@ -235,6 +238,50 @@ const allProducts: Product[] = [
     builtBy: ["vinit-churi", "kenil-joshi"],
     credit: "With Kenil Joshi",
     now: "Moving the in-browser editor experiments toward the product — starting with on-device speech and silence cutting.",
+  },
+  {
+    slug: "infoyantra",
+    name: "infoyantra",
+    color: "#1E3A5F",
+    onColor: "#FAF8F3",
+    kicker: "Civic data · India",
+    status: "Concept · building from Dec 2026",
+    url: "https://infoyantra.com",
+    urlLabel: "infoyantra.com",
+    concept: true,
+    oneLiner: "Indian government notices, made machine-readable: every rule sourced to its page, every change tracked.",
+    summary:
+      "infoyantra will collect official notices — recruitment notifications and their corrigenda first, then schemes and tenders — and turn them into structured data in which every field points to the page and clause it came from. It will watch them for changes. People will use it through change alerts and an eligibility check; software and AI assistants through an API and an MCP server.",
+    problem: [
+      "Government information in India is public, but it arrives as PDFs — often scanned, often in Marathi or Hindi — spread across hundreds of sites. Working out whether you can apply for something means reading forty pages for the five lines that decide it.",
+      "Notices change after they are published. A recruitment notice can be amended twice before it closes, each time by another PDF on the same site. Nobody tells the people who were reading the first one.",
+      "Aggregator sites copy the headlines without the source, and official portals each cover one kind of document. Nothing joins them, keeps their history, or answers a question with the clause that decides it.",
+    ],
+    how: [
+      { title: "Collect", body: "Small, polite collectors per official site, run on a schedule. Every file is archived once, by its hash, with where and when it was fetched." },
+      { title: "Read", body: "Dates, fees, age limits, vacancies and eligibility rules are pulled out of each notice — rules first, a model only where rules can’t, in English, Marathi and Hindi." },
+      { title: "Source", body: "Every value carries the page, the clause and the words it came from. A value without a source is not shown." },
+      { title: "Version", body: "A corrigendum is linked to the notice it changes, and the change is worked out field by field: what moved, when, and on which page." },
+      { title: "Answer", body: "Change alerts, an eligibility check that cites the clause behind each answer, and an API and MCP server for software and AI assistants." },
+    ],
+    decisions: [
+      { title: "Sourced, not guessed", body: "Every answer quotes the document it came from. When a case is borderline, it says “check the notification” instead of deciding." },
+      { title: "Never official, never pretending", body: "No government emblems, a clear “not affiliated” line on every page, and a link to the original document beside every fact." },
+      { title: "Polite collection", body: "Each site’s terms and rate limits are read and recorded before anything is collected from it. Login-walled or paid content is never collected." },
+      { title: "One kind of document at a time", body: "Recruitment notices and their corrigenda first, end to end, before schemes, and schemes before tenders." },
+    ],
+    numbers: [],
+    stack: ["Go", "PostgreSQL", "Cloud Run", "Cloudflare R2 + Workers", "Document AI", "MCP"],
+    journey: [
+      { stage: "Get annoyed", title: "A notice that changed twice", body: "A recruitment notice amended twice by corrigenda before it closed, each one another PDF on the same site. Keeping up meant checking by hand." },
+      { date: "23 Oct 2026", stage: "Research", title: "The plan, written down", body: "Who has the problem, what already exists, the first sources, the data model, the guardrails and the milestones — before any code." },
+      { date: "Dec 2026", stage: "Build", title: "Recruitment notices and their corrigenda", body: "Collectors for about 25 official sites, sourced fields, version history, change alerts and an MCP server.", next: true },
+      { stage: "Build", title: "Schemes", body: "The most-used Maharashtra and central schemes on the same engine, with an eligibility check that cites its clauses.", next: true },
+      { stage: "Ship", title: "A tender pilot", body: "Tender matching for a handful of small businesses, to learn whether the paid side works.", next: true },
+    ],
+    builtBy: ["vinit-churi"],
+    credit: "Solo",
+    now: "Planned and written down. The build starts in December 2026 with recruitment notices and their corrigenda.",
   },
 ];
 

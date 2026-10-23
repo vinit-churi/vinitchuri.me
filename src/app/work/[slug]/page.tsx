@@ -48,7 +48,7 @@ export default async function ProductPage({ params }: PageProps<"/work/[slug]">)
     <article>
       <JsonLd
         data={[
-          productSchema(product),
+          ...(product.concept ? [] : [productSchema(product)]),
           breadcrumbSchema([
             { name: "Home", path: "/" },
             { name: "Work", path: "/work" },
@@ -67,7 +67,10 @@ export default async function ProductPage({ params }: PageProps<"/work/[slug]">)
               <span>{product.kicker}</span>
               <span>{product.credit}</span>
               <span className="inline-flex items-center gap-1.5">
-                <span className="pulse-dot inline-block h-1.5 w-1.5 rounded-full bg-[#2f9e6a] text-[#2f9e6a]" aria-hidden />
+                <span
+                  className={`inline-block h-1.5 w-1.5 rounded-full ${product.concept ? "bg-[#A8A498]" : "pulse-dot bg-[#2f9e6a] text-[#2f9e6a]"}`}
+                  aria-hidden
+                />
                 {product.status}
               </span>
             </p>
@@ -76,15 +79,25 @@ export default async function ProductPage({ params }: PageProps<"/work/[slug]">)
             </h1>
             <p className="mt-6 font-serif text-[1.75rem] leading-snug text-ink italic">{product.oneLiner}</p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href={product.url}
-                target="_blank"
-                rel="noreferrer"
-                className="group inline-flex min-h-12 items-center gap-2 rounded-full px-6 font-semibold transition-transform duration-300 hover:-translate-y-0.5 active:translate-y-0"
-                style={{ background: product.color, color: product.onColor }}
-              >
-                {product.urlLabel} <span className="nudge">↗</span>
-              </a>
+              {product.concept ? (
+                <a
+                  href="#how"
+                  className="inline-flex min-h-12 items-center rounded-full px-6 font-semibold"
+                  style={{ background: product.color, color: product.onColor }}
+                >
+                  A concept · read the plan
+                </a>
+              ) : (
+                <a
+                  href={product.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group inline-flex min-h-12 items-center gap-2 rounded-full px-6 font-semibold transition-transform duration-300 hover:-translate-y-0.5 active:translate-y-0"
+                  style={{ background: product.color, color: product.onColor }}
+                >
+                  {product.urlLabel} <span className="nudge">↗</span>
+                </a>
+              )}
               {related.length > 0 && (
                 <a
                   href="#writing"
@@ -114,22 +127,24 @@ export default async function ProductPage({ params }: PageProps<"/work/[slug]">)
         </section>
 
         {/* NUMBERS */}
-        <Reveal className="pt-20">
-          <dl className="grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-3">
-            {product.numbers.map((n) => (
-              <div key={n.label} className="bg-paper p-7">
-                <dt className="sr-only">{n.label}</dt>
-                <dd className="text-[3rem] leading-none font-bold tracking-[-0.05em]">{n.value}</dd>
-                <dd className="mt-3 text-[15px] leading-snug text-muted">{n.label}</dd>
-              </div>
-            ))}
-          </dl>
-        </Reveal>
+        {product.numbers.length > 0 && (
+          <Reveal className="pt-20">
+            <dl className="grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-3">
+              {product.numbers.map((n) => (
+                <div key={n.label} className="bg-paper p-7">
+                  <dt className="sr-only">{n.label}</dt>
+                  <dd className="text-[3rem] leading-none font-bold tracking-[-0.05em]">{n.value}</dd>
+                  <dd className="mt-3 text-[15px] leading-snug text-muted">{n.label}</dd>
+                </div>
+              ))}
+            </dl>
+          </Reveal>
+        )}
 
         {/* HOW IT WORKS */}
-        <section className="pt-28">
+        <section id="how" className="scroll-mt-24 pt-28">
           <Reveal>
-            <SectionLabel>How it works</SectionLabel>
+            <SectionLabel>{product.concept ? "How it will work" : "How it works"}</SectionLabel>
           </Reveal>
           <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {product.how.map((step, i) => (
@@ -155,7 +170,7 @@ export default async function ProductPage({ params }: PageProps<"/work/[slug]">)
         {/* DECISIONS */}
         <section className="grid gap-12 pt-28 lg:grid-cols-[1fr_1.4fr]">
           <Reveal>
-            <SectionLabel>Decisions I’d make again</SectionLabel>
+            <SectionLabel>{product.concept ? "Decided up front" : "Decisions I’d make again"}</SectionLabel>
           </Reveal>
           <div className="divide-y divide-line border-y border-line">
             {product.decisions.map((d, i) => (
@@ -172,7 +187,9 @@ export default async function ProductPage({ params }: PageProps<"/work/[slug]">)
           <Reveal>
             <SectionLabel>The journey so far</SectionLabel>
             <p className="mt-3 max-w-xl text-[17px] text-muted">
-              From the first annoyance to telling people about it. Dates come from the commit history.
+              {product.concept
+                ? "What has happened, and the plan from here. Dashed dots haven’t happened yet."
+                : "From the first annoyance to telling people about it. Dates come from the commit history."}
             </p>
           </Reveal>
           <ol className="relative mt-12 ml-3 border-l border-line">
@@ -202,7 +219,7 @@ export default async function ProductPage({ params }: PageProps<"/work/[slug]">)
         {/* TEAM + STACK */}
         <section className="grid gap-12 pt-28 sm:grid-cols-2">
           <Reveal>
-            <h2 className="font-mono text-xs text-muted">Built by</h2>
+            <h2 className="font-mono text-xs text-muted">{product.concept ? "Building it" : "Built by"}</h2>
             <ul className="mt-5 space-y-4">
               {product.builtBy.map((slug) => {
                 const person = getPerson(slug);
@@ -220,7 +237,7 @@ export default async function ProductPage({ params }: PageProps<"/work/[slug]">)
             </ul>
           </Reveal>
           <Reveal delay={100}>
-            <h2 className="font-mono text-xs text-muted">Built with</h2>
+            <h2 className="font-mono text-xs text-muted">{product.concept ? "Planned stack" : "Built with"}</h2>
             <ul className="mt-5 flex flex-wrap gap-2">
               {product.stack.map((s) => (
                 <li
