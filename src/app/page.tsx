@@ -7,9 +7,10 @@ import { PostRow } from "@/components/post-row";
 import { ProductRow } from "@/components/product-row";
 import { Reveal } from "@/components/reveal";
 import { RotatingWord } from "@/components/rotating-word";
+import { StageBoard } from "@/components/stage-board";
 import { agents } from "@/content/agents";
 import { posts } from "@/content/posts";
-import { products, stages } from "@/content/products";
+import { products } from "@/content/products";
 import { site } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -19,14 +20,6 @@ export const metadata: Metadata = pageMetadata({
   description: site.description,
   path: "/",
 });
-
-const stageCopy: Record<(typeof stages)[number], string> = {
-  "Get annoyed": "A real problem, ideally one I live next to.",
-  Research: "Laws, data, users, and everything that’s been tried.",
-  Build: "Small and strict, with the newest AI that genuinely fits.",
-  Ship: "In front of real people early — then fix what they find.",
-  "Tell people": "Marketing is part of the build. I write it all up.",
-};
 
 export default function Home() {
   return (
@@ -108,22 +101,17 @@ export default function Home() {
         </ul>
       </section>
 
-      {/* HOW */}
+      {/* NOW, PER PRODUCT */}
       <section className="mx-auto max-w-[1120px] px-6 pt-36">
-        <Reveal>
-          <h2 className="mb-10 font-serif text-[2.5rem] italic">How a product happens here</h2>
+        <Reveal className="mb-8 flex flex-wrap items-baseline justify-between gap-4">
+          <h2 className="font-serif text-[2.5rem] italic">Where everything is</h2>
+          <p className="max-w-sm text-[15px] leading-relaxed text-muted">
+            Every product goes from getting annoyed to telling people. This is where each one is today.
+          </p>
         </Reveal>
-        <ol className="grid gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
-          {stages.map((stage, i) => (
-            <Reveal as="li" key={stage} delay={i * 80} className="group flex flex-col gap-2.5">
-              <span className="text-[3.5rem] leading-none font-extrabold tracking-[-0.05em] text-accent transition-transform duration-500 ease-[var(--ease-out-soft)] group-hover:-translate-y-1.5">
-                {i + 1}
-              </span>
-              <strong className="text-lg">{stage}</strong>
-              <span className="text-[15px] leading-normal text-muted">{stageCopy[stage]}</span>
-            </Reveal>
-          ))}
-        </ol>
+        <Reveal>
+          <StageBoard products={products} />
+        </Reveal>
       </section>
 
       {/* WRITING */}
