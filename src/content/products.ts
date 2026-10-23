@@ -48,8 +48,8 @@ const allProducts: Product[] = [
     onColor: "#1A1A18",
     kicker: "Civic issues · Mumbai",
     status: "Pilot · Borivali ward",
-    url: "https://tracesarkar.com",
-    urlLabel: "tracesarkar.com",
+    url: "https://tracesarkar.novamakers.tech",
+    urlLabel: "tracesarkar.novamakers.tech",
     oneLiner: "Photograph a pothole. Get back who is responsible, what they were paid to do, and what you can do about it.",
     summary:
       "One geotagged photo is classified, matched to the ward and the public road contract that covers it, and turned into a sourced record with the next step drafted — a complaint, an RTI, a share card. The citizen sends it; the platform never does.",
