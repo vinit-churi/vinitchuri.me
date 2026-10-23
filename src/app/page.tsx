@@ -7,7 +7,6 @@ import { PostRow } from "@/components/post-row";
 import { ProductRow } from "@/components/product-row";
 import { Reveal } from "@/components/reveal";
 import { RotatingWord } from "@/components/rotating-word";
-import { StageBoard } from "@/components/stage-board";
 import { agents } from "@/content/agents";
 import { posts } from "@/content/posts";
 import { products } from "@/content/products";
@@ -99,19 +98,6 @@ export default function Home() {
             <PitchCard />
           </Reveal>
         </ul>
-      </section>
-
-      {/* NOW, PER PRODUCT */}
-      <section className="mx-auto max-w-[1120px] px-6 pt-36">
-        <Reveal className="mb-8 flex flex-wrap items-baseline justify-between gap-4">
-          <h2 className="font-serif text-[2.5rem] italic">Where everything is</h2>
-          <p className="max-w-sm text-[15px] leading-relaxed text-muted">
-            Every product goes from getting annoyed to telling people. This is where each one is today.
-          </p>
-        </Reveal>
-        <Reveal>
-          <StageBoard products={products} />
-        </Reveal>
       </section>
 
       {/* WRITING */}
