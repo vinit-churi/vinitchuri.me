@@ -161,7 +161,7 @@ export default function FillmorePage() {
           <h2 className={styles.h2}>
             What’s <em>new</em>
           </h2>
-          <p>Added since it went live, from people using it on real forms. All of it free, all of it on your device.</p>
+          <p>Added since it went live, from using it on real forms. All of it free, all of it on your device.</p>
         </div>
         <ul className={styles.lately}>
           {lately.map((f) => (

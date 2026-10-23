@@ -93,7 +93,7 @@ const allProducts: Product[] = [
     ],
     builtBy: ["vinit-churi"],
     credit: "Solo",
-    now: "Building the Filing agent: from one photo to a sourced complaint draft you choose to send. Then the first RWA secretaries for the Borivali pilot.",
+    now: "Building the Filing agent, and recruiting the first RWA secretaries for the Borivali pilot.",
   },
   {
     slug: "hookline",
