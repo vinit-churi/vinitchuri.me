@@ -7,7 +7,7 @@ import { absoluteUrl } from "@/content/site";
 export const dynamic = "force-static";
 
 /** Bump when site-wide pages change meaningfully. */
-const siteUpdated = "2026-10-15";
+const siteUpdated = "2026-10-23";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const latestPost = posts.reduce((d, p) => (p.date > d ? p.date : d), siteUpdated);
@@ -38,7 +38,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const agentPages: MetadataRoute.Sitemap = agents
     .filter((a) => a.href)
-    .map((a) => ({ url: absoluteUrl(a.href!), lastModified: "2026-10-15", changeFrequency: "monthly", priority: 0.8 }));
+    .map((a) => ({ url: absoluteUrl(a.href!), lastModified: siteUpdated, changeFrequency: "monthly", priority: 0.8 }));
 
   return [...pages, ...work, ...agentPages, ...writing];
 }

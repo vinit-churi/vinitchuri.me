@@ -7,11 +7,11 @@ import { pageMetadata } from "@/lib/metadata";
 export const metadata: Metadata = pageMetadata({
   title: "Now",
   description:
-    "What Vinit Churi is working on this month across TraceSarkar, Hookline, ReelForge and Fillmore — and what’s next for each.",
+    "What Vinit Churi is working on this month across TraceSarkar, Hookline, ReelForge, Fillmore and infoyantra — and what’s next for each.",
   path: "/now",
 });
 
-const updated = "15 October 2026";
+const updated = "23 October 2026";
 
 export default function NowPage() {
   return (
@@ -26,6 +26,10 @@ export default function NowPage() {
         <p className="mt-6 animate-[fade-lift_700ms_var(--ease-out-soft)_160ms_both] text-xl leading-relaxed text-ink-soft">
           A <a href="https://nownownow.com/about" className="text-accent underline underline-offset-4">now page</a>: what
           each of my products is actually doing this month, and what’s next. If it’s not here, I’m not working on it.
+        </p>
+        <p className="mt-4 animate-[fade-lift_700ms_var(--ease-out-soft)_200ms_both] text-lg leading-relaxed text-ink-soft">
+          Through November most of my time goes to preparing for an exam, so building happens in a short slot each
+          day: the Filing agent for TraceSarkar first, then infoyantra.
         </p>
       </header>
 
@@ -66,7 +70,9 @@ export default function NowPage() {
               <Link href="/agents/fillmore" className="text-accent underline underline-offset-4">
                 Fillmore
               </Link>
-              , a form-filling agent for your browser, is live on the Chrome Web Store. The build notes are in{" "}
+              , a form-filling agent for your browser, is live on the Chrome Web Store at v0.8.1: a history of forms
+              you send, screening answers remembered, and filling automatically on sites you choose. The build notes
+              are in{" "}
               <Link href="/writing" className="text-accent underline underline-offset-4">
                 Writing
               </Link>
