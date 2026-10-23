@@ -18,7 +18,7 @@ ${site.name} is a software engineer based in ${site.city}, India. TraceSarkar an
 ${products
   .map(
     (p) =>
-      `- [${p.name}](${absoluteUrl(`/work/${p.slug}`)}): ${p.oneLiner} Status: ${p.status}. Built: ${p.credit}.${p.concept ? " A concept: not built yet." : ` Site: ${p.url}.`} ${p.concept ? "Planned stack" : "Built with"}: ${p.stack.join(", ")}.`,
+      `- [${p.name}](${absoluteUrl(`/work/${p.slug}`)}): ${p.oneLiner} Status: ${p.status}. Built: ${p.credit}.${p.concept ? ` A concept: not built yet. Landing page: ${p.url}.` : ` Site: ${p.url}.`} ${p.concept ? "Planned stack" : "Built with"}: ${p.stack.join(", ")}.`,
   )
   .join("\n")}
 

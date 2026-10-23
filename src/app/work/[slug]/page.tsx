@@ -80,13 +80,24 @@ export default async function ProductPage({ params }: PageProps<"/work/[slug]">)
             <p className="mt-6 font-serif text-[1.75rem] leading-snug text-ink italic">{product.oneLiner}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               {product.concept ? (
-                <a
-                  href="#how"
-                  className="inline-flex min-h-12 items-center rounded-full px-6 font-semibold"
-                  style={{ background: product.color, color: product.onColor }}
-                >
-                  A concept · read the plan
-                </a>
+                <>
+                  <a
+                    href="#how"
+                    className="inline-flex min-h-12 items-center rounded-full px-6 font-semibold"
+                    style={{ background: product.color, color: product.onColor }}
+                  >
+                    A concept · read the plan
+                  </a>
+                  <a
+                    href={product.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group inline-flex min-h-12 items-center gap-2 rounded-full border px-6 font-semibold transition-transform duration-300 hover:-translate-y-0.5 active:translate-y-0"
+                    style={{ borderColor: product.color, color: product.color }}
+                  >
+                    {product.urlLabel} <span className="nudge">↗</span>
+                  </a>
+                </>
               ) : (
                 <a
                   href={product.url}
