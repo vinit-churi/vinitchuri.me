@@ -30,12 +30,12 @@ const steps = [
   },
   {
     title: "Drop in documents",
-    body: "Passports, ID cards, payslips, bills. Text and PDFs are read on your device, passports by their machine-readable lines with check digits. Photos and scans need your own Claude key. What it finds goes into a profile you can check and edit.",
-    chips: [["PDF"], ["Text"], ["Photos · your key"]],
+    body: "Passports, ID cards, payslips, bills. Text and PDFs are read on your device, passports by their machine-readable lines with check digits. Photos and scans need a key from an AI provider you already use, or a model running on your own computer. What it finds goes into a profile you can check and edit.",
+    chips: [["PDF"], ["Text"], ["Photos · your AI key"]],
   },
   {
     title: "Open any form",
-    body: "Fillmore finds the fields, even ones named txtDtOfBrth or labelled in Hindi or Marathi, fills what it is sure of, and marks each answer with where it came from. It can attach your resume or proof of address to upload fields too.",
+    body: "Fillmore finds the fields, even ones named txtDtOfBrth or labelled in Hindi or Marathi, fills what it is sure of, and marks each answer with where it came from. It works inside pop-up dialogs and multi-step applications, and can attach your resume or proof of address to upload fields too.",
     chips: [["Chrome"], ["हिन्दी · मराठी"], ["Firefox · later", "later"]],
   },
   {
@@ -43,6 +43,21 @@ const steps = [
     body: "Anything uncertain becomes a question you answer with a tap. Head for Submit and it lists what is still missing. It never presses Submit: you read it through and send it.",
     chips: [["You stay in charge"]],
   },
+];
+
+const lately = [
+  { title: "A history of forms you send", body: "When, where, and every answer, marked as yours, Fillmore’s or the page’s. Search it, copy an answer, or fill the same form again in one click." },
+  { title: "Screening answers, remembered", body: "Answer “years of experience” or a yes/no question once, and it fills the same question on the next application, however the site words it." },
+  { title: "Fill automatically, if you want", body: "Off by default. Turn it on for a site and it fills what it is sure of as soon as a form opens. Undo is one click." },
+  { title: "Your own AI, any provider", body: "Bring a key you already pay for, or run a model on your own computer so nothing leaves it. The same safety rules apply to every model." },
+  { title: "Pop-ups and multi-step forms", body: "It works inside application dialogs, and treats Next, Continue and Review as steps of one form, not as sending it." },
+  { title: "Keys and secrets left alone", body: "API keys, tokens and recovery codes are treated like passwords: never filled, never remembered, never in your history." },
+];
+
+const films = [
+  { src: "/agents/fillmore/video/meet.mp4", poster: "/agents/fillmore/video/meet.jpg", title: "Meet Fillmore", length: "25 s" },
+  { src: "/agents/fillmore/video/history.mp4", poster: "/agents/fillmore/video/history.jpg", title: "A history of every form", length: "28 s" },
+  { src: "/agents/fillmore/video/whats-new.mp4", poster: "/agents/fillmore/video/whats-new.jpg", title: "What’s new, v0.5 → v0.7", length: "38 s" },
 ];
 
 const promises = [
@@ -144,6 +159,55 @@ export default function FillmorePage() {
       <section className="mx-auto max-w-[1120px] px-6 pb-26">
         <div className={styles.secHead}>
           <h2 className={styles.h2}>
+            What’s <em>new</em>
+          </h2>
+          <p>Added since it went live, from people using it on real forms. All of it free, all of it on your device.</p>
+        </div>
+        <ul className={styles.lately}>
+          {lately.map((f) => (
+            <li key={f.title}>
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="mx-auto max-w-[1120px] px-6 pb-26">
+        <div className={styles.secHead}>
+          <h2 className={styles.h2}>
+            See it <em>work</em>
+          </h2>
+          <p>Three short clips made from the real extension. No sound needed.</p>
+        </div>
+        <ul className={styles.films}>
+          {films.map((f) => (
+            <li key={f.src}>
+              <video
+                className={styles.filmClip}
+                src={f.src}
+                poster={f.poster}
+                width={720}
+                height={1280}
+                controls
+                muted
+                playsInline
+                preload="none"
+                aria-label={f.title}
+              >
+                <a href={f.src}>Watch “{f.title}”</a>
+              </video>
+              <p>
+                <b>{f.title}</b> <span>{f.length}</span>
+              </p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="mx-auto max-w-[1120px] px-6 pb-26">
+        <div className={styles.secHead}>
+          <h2 className={styles.h2}>
             What Fillmore <em>won’t</em> do
           </h2>
           <p>The rules it is built around, each one covered by its tests. If a feature would break one, it doesn’t ship.</p>
@@ -173,13 +237,13 @@ export default function FillmorePage() {
         <div className={styles.statusStrip}>
           <div>
             <small>Stage</small>
-            <b>Live on the Chrome Web Store</b>
+            <b>Live on the Chrome Web Store · v0.8.1</b>
             <span>Free. No account to make.</span>
           </div>
           <div>
             <small>Runs</small>
             <b>On your device</b>
-            <span>Nothing leaves it unless you add your own Claude key.</span>
+            <span>Nothing leaves it unless you add your own AI key.</span>
           </div>
           <div>
             <small>Next</small>
