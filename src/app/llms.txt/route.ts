@@ -22,7 +22,7 @@ ${products
   )
   .join("\n")}
 
-## Agents (Fillmore is live; the Filing agent is in progress)
+## Agents (Fillmore and the Filing agent are live)
 
 ${agents.map((a) => `- ${a.href ? `[${a.name}](${absoluteUrl(a.href)})` : a.name} (${a.status}): ${a.oneLiner}${a.install ? ` Install: ${a.install}` : ""}`).join("\n")}
 

@@ -29,7 +29,7 @@ export default function NowPage() {
         </p>
         <p className="mt-4 animate-[fade-lift_700ms_var(--ease-out-soft)_200ms_both] text-lg leading-relaxed text-ink-soft">
           Through November most of my time goes to preparing for an exam, so building happens in a short slot each
-          day: the Filing agent for TraceSarkar first, then infoyantra.
+          day. The Filing agent for TraceSarkar is out; infoyantra is next.
         </p>
       </header>
 
