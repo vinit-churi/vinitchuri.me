@@ -164,7 +164,8 @@ export default function Home() {
               <p className="font-mono text-xs text-muted">YouTube · {site.youtube.handle}</p>
               <h2 className="mt-1 font-serif text-[2.5rem] leading-[1.05] italic">{site.youtube.name}</h2>
               <p className="mt-3 max-w-lg text-[15px] leading-relaxed text-muted">
-                Short videos about the things I build, how they work, and what broke along the way.
+                AI agents can write code now. So what is a developer for? I’m trying to find out, in public. Each
+                video covers one thing I built or tried, the decisions behind it, and what I learned.
               </p>
             </div>
             <span className="text-[15px] font-semibold">
