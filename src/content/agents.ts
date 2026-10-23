@@ -51,12 +51,3 @@ export const agents: Agent[] = [
     status: "In progress",
   },
 ];
-
-/** The shape every agent follows, whatever the job. */
-export const agentSteps = [
-  { title: "Trigger", body: "A form, a photo, a notice — something real starts it." },
-  { title: "Plan", body: "It breaks the job into steps it can check." },
-  { title: "Use real tools", body: "The same pipelines my products run on: browsers, maps, contracts, documents." },
-  { title: "Check its own work", body: "Sources must exist, every field must have one, and nothing goes out unseen." },
-  { title: "Hand it to a person", body: "You approve, send or ship. Every run leaves a log you can read." },
-] as const;

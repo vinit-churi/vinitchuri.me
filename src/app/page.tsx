@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AgentCard, PitchCard } from "@/components/agent-card";
@@ -6,7 +7,7 @@ import { PostRow } from "@/components/post-row";
 import { ProductRow } from "@/components/product-row";
 import { Reveal } from "@/components/reveal";
 import { RotatingWord } from "@/components/rotating-word";
-import { agents, agentSteps } from "@/content/agents";
+import { agents } from "@/content/agents";
 import { posts } from "@/content/posts";
 import { products, stages } from "@/content/products";
 import { site } from "@/content/site";
@@ -105,33 +106,6 @@ export default function Home() {
             <PitchCard />
           </Reveal>
         </ul>
-
-        <div className="grid items-start gap-12 pt-28 lg:grid-cols-2">
-          <Reveal>
-            <h2 className="font-serif text-[2.5rem] italic">How my agents work</h2>
-            <p className="mt-4 max-w-md text-[17px] leading-relaxed text-ink-soft">
-              Same shape every time, whatever the job. An agent I can’t explain in five steps isn’t ready to ship.
-            </p>
-          </Reveal>
-          <ol className="border-t border-ink">
-            {agentSteps.map((step, i) => (
-              <Reveal
-                as="li"
-                key={step.title}
-                delay={i * 60}
-                className="group grid grid-cols-[56px_1fr] gap-4 border-b border-line py-5"
-              >
-                <span className="text-4xl leading-none font-extrabold tracking-[-0.05em] text-accent transition-transform duration-500 ease-[var(--ease-out-soft)] group-hover:-translate-y-1">
-                  {i + 1}
-                </span>
-                <span>
-                  <strong className="text-lg">{step.title}</strong>
-                  <span className="mt-1 block text-[15px] leading-normal text-muted">{step.body}</span>
-                </span>
-              </Reveal>
-            ))}
-          </ol>
-        </div>
       </section>
 
       {/* HOW */}
@@ -166,6 +140,37 @@ export default function Home() {
               <PostRow key={post.slug} post={post} />
             ))}
           </ul>
+        </Reveal>
+      </section>
+
+      {/* VIDEO */}
+      <section className="mx-auto max-w-[1120px] px-6 pt-36">
+        <Reveal>
+          <a
+            href={site.youtube.href}
+            target="_blank"
+            rel="noopener"
+            className="group grid items-center gap-8 rounded-3xl border border-line bg-white/60 p-8 transition-transform duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 sm:grid-cols-[auto_1fr_auto] sm:p-10"
+          >
+            <Image
+              src="/youtube/build-to-find-out.webp"
+              alt="The channel's penguin in a red scarf, looking up from a laptop"
+              width={112}
+              height={112}
+              unoptimized
+              className="size-24 rounded-full sm:size-28"
+            />
+            <div>
+              <p className="font-mono text-xs text-muted">YouTube · {site.youtube.handle}</p>
+              <h2 className="mt-1 font-serif text-[2.5rem] leading-[1.05] italic">{site.youtube.name}</h2>
+              <p className="mt-3 max-w-lg text-[15px] leading-relaxed text-muted">
+                Short videos about the things I build, how they work, and what broke along the way.
+              </p>
+            </div>
+            <span className="text-[15px] font-semibold">
+              Watch on YouTube <span className="nudge">→</span>
+            </span>
+          </a>
         </Reveal>
       </section>
 

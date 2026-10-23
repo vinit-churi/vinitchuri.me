@@ -25,8 +25,9 @@ export const site = {
   ],
   social: [
     { label: "GitHub", href: "https://github.com/vinit-churi" },
-    { label: "Logicvell", href: "https://logicvell.com" },
+    { label: "YouTube", href: "https://www.youtube.com/@buildtofindout" },
   ],
+  youtube: { name: "Build to Find Out", handle: "@buildtofindout", href: "https://www.youtube.com/@buildtofindout" },
 } as const;
 
 export const nav = [
