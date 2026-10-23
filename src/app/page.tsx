@@ -92,7 +92,7 @@ export default function Home() {
           </h2>
           <p className="max-w-sm text-[15px] leading-relaxed text-muted">
             Autonomous agents built on new AI. Each does one job end to end, then hands it to a person. Fillmore is
-            out on the Chrome Web Store; the rest are still in the lab.
+            out on the Chrome Web Store; the Filing agent for TraceSarkar is being built now.
           </p>
         </Reveal>
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
