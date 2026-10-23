@@ -47,7 +47,7 @@ const steps = [
 
 const lately = [
   { title: "A history of forms you send", body: "When, where, and every answer, marked as yours, Fillmore’s or the page’s. Search it, copy an answer, or fill the same form again in one click." },
-  { title: "Screening answers, remembered", body: "Answer “years of experience” or a yes/no question once, and it fills the same question on the next application, however the site words it." },
+  { title: "Screening answers, remembered", body: "Answer “years of experience” or a yes/no question once, and it fills the same question on the next application, even when it is worded a little differently." },
   { title: "Fill automatically, if you want", body: "Off by default. Turn it on for a site and it fills what it is sure of as soon as a form opens. Undo is one click." },
   { title: "Your own AI, any provider", body: "Bring a key you already pay for, or run a model on your own computer so nothing leaves it. The same safety rules apply to every model." },
   { title: "Pop-ups and multi-step forms", body: "It works inside application dialogs, and treats Next, Continue and Review as steps of one form, not as sending it." },
